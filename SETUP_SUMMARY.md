@@ -25,7 +25,8 @@
 
 *   **Java Home**: 设置为 Java 11 的路径。
     ```properties
-    org.gradle.java.home=/Users/zhaoheh/Library/Java/JavaVirtualMachines/corretto-11.0.29/Contents/Home
+    # Do not commit org.gradle.java.home with a machine-specific path.
+    # Configure JDK 11 locally in Android Studio or via JAVA_HOME.
     ```
 *   **AndroidX**: 启用 AndroidX 支持。
     ```properties
