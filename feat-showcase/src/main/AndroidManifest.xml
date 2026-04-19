@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity
+            android:name=".ShowcaseActivity"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="dev.hehe.sketch.action.SKETCH_ENTRY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="dev.hehe.sketch.entry.TITLE"
+                android:value="@string/showcase_title" />
+            <meta-data
+                android:name="dev.hehe.sketch.entry.SUMMARY"
+                android:value="@string/showcase_summary" />
+            <meta-data
+                android:name="dev.hehe.sketch.entry.ORDER"
+                android:value="10" />
+            <meta-data
+                android:name="dev.hehe.sketch.entry.MODULE"
+                android:value="feat-showcase" />
+        </activity>
+    </application>
+
+</manifest>

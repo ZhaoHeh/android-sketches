@@ -21,5 +21,5 @@ dependencyResolutionManagement {
 rootProject.name = "android-sketches"
 include(":app")
 include(":sketch-core")
-include(":feature-showcase")
-include(":feature-camerax-aruco")
+include(":feat-showcase")
+include(":feat-camerax-aruco")
