@@ -13,7 +13,7 @@ import org.opencv.objdetect.Objdetect
 
 class OpenCvArucoDetector {
 
-    private val dictionary = Objdetect.getPredefinedDictionary(Objdetect.DICT_4X4_50)
+    private val dictionary = Objdetect.getPredefinedDictionary(Objdetect.DICT_4X4_100)
     private val detectorParameters = DetectorParameters()
     private val detector = ArucoDetector(dictionary, detectorParameters)
 
