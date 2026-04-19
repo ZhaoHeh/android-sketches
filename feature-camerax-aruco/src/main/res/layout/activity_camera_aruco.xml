@@ -46,7 +46,7 @@
         android:id="@+id/infoPanel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#FAFAFA"
+        android:background="#000000"
         android:elevation="6dp"
         android:orientation="vertical"
         android:paddingHorizontal="20dp"
@@ -62,6 +62,7 @@
             android:layout_height="wrap_content"
             android:text="@string/camera_aruco_info_title"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:textColor="#FFFFFF"
             android:textStyle="bold" />
 
         <TextView
@@ -70,7 +71,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="@string/camera_aruco_info_status_label"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:textColor="#A6A6A6" />
 
         <TextView
             android:id="@+id/detectionStatusValueView"
@@ -79,6 +81,7 @@
             android:layout_marginTop="4dp"
             android:text="@string/camera_aruco_status_initializing"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="#7EE787"
             tools:text="正在识别 arUco" />
 
         <TextView
@@ -87,7 +90,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="@string/camera_aruco_info_count_label"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:textColor="#A6A6A6" />
 
         <TextView
             android:id="@+id/detectionCountValueView"
@@ -95,7 +99,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="0"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/detectionIdsLabelView"
@@ -103,7 +108,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="@string/camera_aruco_info_ids_label"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:textColor="#A6A6A6" />
 
         <TextView
             android:id="@+id/detectionIdsValueView"
@@ -112,6 +118,7 @@
             android:layout_marginTop="4dp"
             android:text="@string/camera_aruco_ids_empty"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="#FFFFFF"
             tools:text="12, 18" />
 
         <TextView
@@ -120,7 +127,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="@string/camera_aruco_info_latency_label"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:textColor="#A6A6A6" />
 
         <TextView
             android:id="@+id/detectionLatencyValueView"
@@ -129,6 +137,7 @@
             android:layout_marginTop="4dp"
             android:text="@string/camera_aruco_latency_empty"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="#FFFFFF"
             tools:text="28 ms" />
 
     </LinearLayout>
