@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_aruco_title">CameraX arUco</string>
+    <string name="camera_aruco_entry_summary">后置相机预览、arUco 检测和实时统计展示</string>
+    <string name="camera_aruco_info_title">识别信息</string>
+    <string name="camera_aruco_info_status_label">状态</string>
+    <string name="camera_aruco_info_count_label">当前帧 arUco 数量</string>
+    <string name="camera_aruco_info_ids_label">当前帧 arUco 编码</string>
+    <string name="camera_aruco_info_latency_label">当前帧处理耗时</string>
+    <string name="camera_aruco_status_initializing">正在初始化 OpenCV 与相机...</string>
+    <string name="camera_aruco_status_request_permission">需要相机权限才能开始预览与识别。</string>
+    <string name="camera_aruco_status_waiting_preview">正在等待预览流...</string>
+    <string name="camera_aruco_status_detecting">正在识别 arUco</string>
+    <string name="camera_aruco_status_no_marker">当前帧未检测到 arUco</string>
+    <string name="camera_aruco_status_camera_error">相机启动失败</string>
+    <string name="camera_aruco_status_opencv_error">OpenCV 初始化失败</string>
+    <string name="camera_aruco_status_permission_denied">未授予相机权限，无法继续。</string>
+    <string name="camera_aruco_ids_empty">无</string>
+    <string name="camera_aruco_latency_empty">--</string>
+    <string name="camera_aruco_latency_format">%1$d ms</string>
+    <string name="camera_aruco_count_format">%1$d</string>
+</resources>

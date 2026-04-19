@@ -22,3 +22,4 @@ rootProject.name = "android-sketches"
 include(":app")
 include(":sketch-core")
 include(":feature-showcase")
+include(":feature-camerax-aruco")
