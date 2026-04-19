@@ -14,10 +14,10 @@
 
             <meta-data
                 android:name="dev.hehe.sketch.entry.TITLE"
-                android:value="Showcase Sandbox" />
+                android:value="Showcase 示例页" />
             <meta-data
                 android:name="dev.hehe.sketch.entry.SUMMARY"
-                android:value="A sample feature module proving that manifest-registered activities can appear on the app home automatically." />
+                android:value="一个用于演示的功能模块，验证通过 manifest 注册的 Activity 可以自动出现在应用首页。" />
             <meta-data
                 android:name="dev.hehe.sketch.entry.ORDER"
                 android:value="10" />

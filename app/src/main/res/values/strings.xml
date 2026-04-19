@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Sketches</string>
-    <string name="sketch_home_title">Sketch Playground</string>
-    <string name="sketch_home_summary">Every integrated feature module can expose one or more experiment activities here. Add a new library, declare its entry activity, and the home screen will pick it up automatically.</string>
-    <string name="sketch_home_empty">No sketch entries found yet. Add a feature library module and expose an activity entry to make it appear here.</string>
-    <string name="sketch_entry_summary_fallback">From module: %1$s</string>
+    <string name="app_name">Sketch</string>
+    <string name="sketch_home_title">Sketch 实验场</string>
+    <string name="sketch_home_summary">这里会展示已经接入的实验功能模块。新增一个库模块并声明入口 Activity 后，首页就会自动发现并展示它。</string>
+    <string name="sketch_home_empty">暂时还没有可用的 sketch 入口。添加功能库模块并暴露入口 Activity 后，它就会显示在这里。</string>
+    <string name="sketch_entry_summary_fallback">来自模块：%1$s</string>
 </resources>

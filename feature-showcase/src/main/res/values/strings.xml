@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="showcase_title">Showcase Sandbox</string>
-    <string name="showcase_summary">This screen comes from a standalone library module. It is discovered by the app through the merged manifest instead of a hard-coded registration table.</string>
-    <string name="showcase_notes">Use this module as a template for future experiments: create a library, add an activity, declare the shared sketch action and metadata, then let the app home discover it automatically.</string>
+    <string name="showcase_title">Showcase 示例页</string>
+    <string name="showcase_summary">这个页面来自一个独立的库模块。应用会通过合并后的 manifest 自动发现它，而不是依赖硬编码的注册表。</string>
+    <string name="showcase_notes">后续新增实验模块时，可以参考这个模板：创建库模块、添加 Activity、声明统一的 sketch action 和元数据，首页就会自动把它展示出来。</string>
 </resources>
