@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="showcase_title">Showcase Sandbox</string>
+    <string name="showcase_summary">This screen comes from a standalone library module. It is discovered by the app through the merged manifest instead of a hard-coded registration table.</string>
+    <string name="showcase_notes">Use this module as a template for future experiments: create a library, add an activity, declare the shared sketch action and metadata, then let the app home discover it automatically.</string>
+</resources>

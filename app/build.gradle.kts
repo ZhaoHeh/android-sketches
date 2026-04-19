@@ -38,6 +38,8 @@ android {
 
 dependencies {
 
+    implementation(project(":sketch-core"))
+    implementation(project(":feature-showcase"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

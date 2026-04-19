@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Sketches</string>
+    <string name="sketch_home_title">Sketch Playground</string>
+    <string name="sketch_home_summary">Every integrated feature module can expose one or more experiment activities here. Add a new library, declare its entry activity, and the home screen will pick it up automatically.</string>
+    <string name="sketch_home_empty">No sketch entries found yet. Add a feature library module and expose an activity entry to make it appear here.</string>
+    <string name="sketch_entry_summary_fallback">From module: %1$s</string>
 </resources>
