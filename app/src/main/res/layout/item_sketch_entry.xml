@@ -7,8 +7,9 @@
     android:layout_marginBottom="12dp"
     android:clickable="true"
     android:focusable="true"
+    app:cardBackgroundColor="@color/color_surface"
     app:cardElevation="0dp"
-    app:strokeColor="?attr/colorPrimary"
+    app:strokeColor="?attr/colorSecondary"
     app:strokeWidth="1dp">
 
     <LinearLayout
@@ -22,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:textColor="@color/color_text_primary"
             android:textStyle="bold"
             tools:text="Camera Buffer Lab" />
 
@@ -31,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textColor="@color/color_text_secondary"
             tools:text="Preview stream buffering, rendering, and routing experiments." />
 
     </LinearLayout>

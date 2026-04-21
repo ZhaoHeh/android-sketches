@@ -50,7 +50,6 @@ class CameraArucoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera_aruco)
-        title = getString(R.string.camera_aruco_title)
 
         bindViews()
         observePreviewState()

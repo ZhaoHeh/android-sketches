@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_background"
     android:fillViewport="true"
     tools:context=".MainActivity">
 
@@ -19,6 +20,7 @@
             android:layout_height="wrap_content"
             android:text="@string/sketch_home_title"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textColor="@color/color_text_primary"
             android:textStyle="bold" />
 
         <TextView
@@ -27,7 +29,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/sketch_home_summary"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="@color/color_text_secondary" />
 
         <TextView
             android:id="@+id/emptyView"
@@ -37,6 +40,7 @@
             android:gravity="center"
             android:text="@string/sketch_home_empty"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="@color/color_text_secondary"
             android:visibility="gone"
             tools:visibility="visible" />
 
