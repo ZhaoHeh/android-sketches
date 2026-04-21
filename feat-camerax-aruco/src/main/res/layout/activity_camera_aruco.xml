@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#000000"
-        app:layout_constraintBottom_toTopOf="@id/infoPanel"
+        app:layout_constraintBottom_toTopOf="@id/bottomBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -42,224 +42,101 @@
 
     </FrameLayout>
 
-    <ScrollView
-        android:id="@+id/infoPanel"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomBar"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="#000000"
-        android:elevation="6dp"
+        android:layout_height="112dp"
+        android:background="#CC000000"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/leftInfoContainer"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical"
-            android:paddingHorizontal="20dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="20dp">
-
-            <TextView
-                android:id="@+id/infoTitleView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/camera_aruco_info_title"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/detectionStatusLabelView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/camera_aruco_info_status_label"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                android:textColor="#A6A6A6" />
-
-            <TextView
-                android:id="@+id/detectionStatusValueView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/camera_aruco_status_initializing"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                android:textColor="#7EE787"
-                tools:text="正在识别 arUco" />
-
-            <TextView
-                android:id="@+id/detectionCountLabelView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/camera_aruco_info_count_label"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                android:textColor="#A6A6A6" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/recordToggleButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/detectionCountValueView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="0"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                android:textColor="#FFFFFF" />
-
-            <TextView
-                android:id="@+id/detectionIdsLabelView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/camera_aruco_info_ids_label"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                android:textColor="#A6A6A6" />
-
-            <TextView
-                android:id="@+id/detectionIdsValueView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/camera_aruco_ids_empty"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                android:textColor="#FFFFFF"
-                tools:text="12, 18" />
-
-            <TextView
-                android:id="@+id/detectionLatencyLabelView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/camera_aruco_info_latency_label"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                android:textColor="#A6A6A6" />
-
-            <TextView
-                android:id="@+id/detectionLatencyValueView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/camera_aruco_latency_empty"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                android:textColor="#FFFFFF"
-                tools:text="28 ms" />
-
-            <TextView
-                android:id="@+id/recordingTitleView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/camera_aruco_recording_title"
+                android:text="@string/camera_aruco_marker_count_format"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold" />
+                android:textColor="#FF7A7A"
+                android:textStyle="bold"
+                tools:text="0 arUco" />
+        </LinearLayout>
 
-            <TextView
-                android:id="@+id/recordingStatusLabelView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/camera_aruco_recording_status_label"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                android:textColor="#A6A6A6" />
+        <FrameLayout
+            android:id="@+id/recordToggleButton"
+            android:layout_width="92dp"
+            android:layout_height="92dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/recordingStatusValueView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/camera_aruco_recording_status_idle"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                android:textColor="#FFB86C" />
+            <View
+                android:id="@+id/recordOuterRingView"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent" />
 
-            <TextView
-                android:id="@+id/recordingQualityLabelView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/camera_aruco_recording_quality_label"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                android:textColor="#A6A6A6" />
+            <View
+                android:id="@+id/recordInnerIndicatorView"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:background="@android:color/holo_red_light" />
+        </FrameLayout>
 
-            <TextView
-                android:id="@+id/recordingQualityValueView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="--"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                android:textColor="#FFFFFF" />
-
-            <TextView
-                android:id="@+id/recordingResolutionLabelView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/camera_aruco_recording_resolution_label"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                android:textColor="#A6A6A6" />
+        <LinearLayout
+            android:id="@+id/rightInfoContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/recordToggleButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/recordingResolutionValueView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="--"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                android:textColor="#FFFFFF" />
+                android:text="@string/camera_aruco_resolution_empty"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="#F6D365"
+                android:textStyle="bold"
+                tools:text="3840x2160" />
 
             <TextView
-                android:id="@+id/recordingDurationLabelView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/camera_aruco_recording_duration_label"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                android:textColor="#A6A6A6" />
-
-            <TextView
-                android:id="@+id/recordingDurationValueView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="00:00"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                android:textColor="#FFFFFF" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/startRecordingButton"
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/camera_aruco_action_start_recording" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/stopRecordingButton"
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_weight="1"
-                    android:text="@string/camera_aruco_action_stop_recording" />
-            </LinearLayout>
-
-            <com.google.android.material.button.MaterialButton
                 android:id="@+id/openLatestVideoButton"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/camera_aruco_action_open_latest_video" />
-
+                android:layout_marginTop="6dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:text="@string/camera_aruco_open_video_action"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
-    </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
