@@ -10,14 +10,12 @@
     <string name="camera_aruco_open_video_failed">无法打开最新视频</string>
     <string name="camera_aruco_open_video_empty">当前还没有可查看的视频</string>
     <string name="camera_aruco_open_video_action">查看视频</string>
+    <string name="camera_aruco_open_video_hint">查看最新录制视频</string>
+    <string name="camera_aruco_open_video_content_description">打开最新录制视频</string>
     <string name="camera_aruco_status_initializing">正在初始化 OpenCV 与相机...</string>
     <string name="camera_aruco_status_request_permission">需要相机权限才能开始预览与识别。</string>
     <string name="camera_aruco_status_waiting_preview">正在等待预览流...</string>
-    <string name="camera_aruco_status_detecting">正在识别 arUco</string>
-    <string name="camera_aruco_status_no_marker">当前帧未检测到 arUco</string>
     <string name="camera_aruco_status_camera_error">相机启动失败</string>
     <string name="camera_aruco_status_opencv_error">OpenCV 初始化失败</string>
     <string name="camera_aruco_status_permission_denied">未授予相机权限，无法继续。</string>
-    <string name="camera_aruco_latency_empty">--</string>
-    <string name="camera_aruco_latency_format">%1$d ms</string>
 </resources>

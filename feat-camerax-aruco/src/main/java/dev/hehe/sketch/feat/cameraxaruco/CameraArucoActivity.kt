@@ -8,6 +8,7 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -24,7 +25,7 @@ class CameraArucoActivity : AppCompatActivity() {
     private lateinit var previewStatusView: TextView
     private lateinit var detectionCountValueView: TextView
     private lateinit var recordingResolutionValueView: TextView
-    private lateinit var openLatestVideoButton: TextView
+    private lateinit var openLatestVideoButton: ImageButton
     private lateinit var recordToggleButton: View
     private lateinit var recordOuterRingView: View
     private lateinit var recordInnerIndicatorView: View
@@ -98,6 +99,7 @@ class CameraArucoActivity : AppCompatActivity() {
         applyMarkerStateColor(0)
         applyRecordingButtonStyle(false)
         openLatestVideoButton.isEnabled = false
+        openLatestVideoButton.alpha = DISABLED_ACTION_ALPHA
     }
 
     private fun setupRecordingController() {
@@ -125,6 +127,10 @@ class CameraArucoActivity : AppCompatActivity() {
             } catch (_: ActivityNotFoundException) {
                 Toast.makeText(this, R.string.camera_aruco_open_video_failed, Toast.LENGTH_SHORT).show()
             }
+        }
+        openLatestVideoButton.setOnLongClickListener {
+            Toast.makeText(this, R.string.camera_aruco_open_video_hint, Toast.LENGTH_SHORT).show()
+            true
         }
     }
 
@@ -193,6 +199,7 @@ class CameraArucoActivity : AppCompatActivity() {
         currentRecordingState = state
         recordingResolutionValueView.text = state.resolutionLabel
         openLatestVideoButton.isEnabled = state.latestVideoAvailable
+        openLatestVideoButton.alpha = if (state.latestVideoAvailable) ENABLED_ACTION_ALPHA else DISABLED_ACTION_ALPHA
         recordToggleButton.isEnabled = state.qualityLabel != "--" &&
             state.status != RecordingController.RecordingStatus.FINALIZING
         applyRecordingButtonStyle(state.status == RecordingController.RecordingStatus.RECORDING)
@@ -234,5 +241,7 @@ class CameraArucoActivity : AppCompatActivity() {
 
     private companion object {
         const val TAG = "CameraArucoActivity"
+        const val ENABLED_ACTION_ALPHA = 1f
+        const val DISABLED_ACTION_ALPHA = 0.38f
     }
 }
