@@ -1,6 +1,7 @@
 package dev.hehe.sketch.feat.cameraxaruco
 
 import android.Manifest
+import android.content.ActivityNotFoundException
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
+import com.google.android.material.button.MaterialButton
 import org.opencv.android.OpenCVLoader
 import java.util.concurrent.Executors
 
@@ -23,11 +25,19 @@ class CameraArucoActivity : AppCompatActivity() {
     private lateinit var detectionCountValueView: TextView
     private lateinit var detectionIdsValueView: TextView
     private lateinit var detectionLatencyValueView: TextView
+    private lateinit var recordingStatusValueView: TextView
+    private lateinit var recordingQualityValueView: TextView
+    private lateinit var recordingResolutionValueView: TextView
+    private lateinit var recordingDurationValueView: TextView
+    private lateinit var startRecordingButton: MaterialButton
+    private lateinit var stopRecordingButton: MaterialButton
+    private lateinit var openLatestVideoButton: MaterialButton
 
     private val analysisExecutor = Executors.newSingleThreadExecutor()
     private var detector: OpenCvArucoDetector? = null
 
     private var cameraSessionController: CameraSessionController? = null
+    private lateinit var recordingController: RecordingController
 
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -46,6 +56,7 @@ class CameraArucoActivity : AppCompatActivity() {
 
         bindViews()
         observePreviewState()
+        setupRecordingController()
 
         if (!OpenCVLoader.initLocal()) {
             showFatalState(R.string.camera_aruco_status_opencv_error)
@@ -66,6 +77,7 @@ class CameraArucoActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        recordingController.stopRecording()
         cameraSessionController?.stop()
         analysisExecutor.shutdown()
         super.onDestroy()
@@ -79,9 +91,44 @@ class CameraArucoActivity : AppCompatActivity() {
         detectionCountValueView = findViewById(R.id.detectionCountValueView)
         detectionIdsValueView = findViewById(R.id.detectionIdsValueView)
         detectionLatencyValueView = findViewById(R.id.detectionLatencyValueView)
+        recordingStatusValueView = findViewById(R.id.recordingStatusValueView)
+        recordingQualityValueView = findViewById(R.id.recordingQualityValueView)
+        recordingResolutionValueView = findViewById(R.id.recordingResolutionValueView)
+        recordingDurationValueView = findViewById(R.id.recordingDurationValueView)
+        startRecordingButton = findViewById(R.id.startRecordingButton)
+        stopRecordingButton = findViewById(R.id.stopRecordingButton)
+        openLatestVideoButton = findViewById(R.id.openLatestVideoButton)
+
         previewView.implementationMode = PreviewView.ImplementationMode.COMPATIBLE
         previewView.scaleType = PreviewView.ScaleType.FILL_CENTER
         renderIdleState(getString(R.string.camera_aruco_status_initializing))
+    }
+
+    private fun setupRecordingController() {
+        recordingController = RecordingController(
+            context = this,
+            onStateChanged = { state -> runOnUiThread { renderRecordingState(state) } },
+            onError = { message -> runOnUiThread { Toast.makeText(this, message, Toast.LENGTH_SHORT).show() } }
+        )
+
+        startRecordingButton.setOnClickListener {
+            recordingController.startRecording()
+        }
+        stopRecordingButton.setOnClickListener {
+            recordingController.stopRecording()
+        }
+        openLatestVideoButton.setOnClickListener {
+            val intent = recordingController.buildOpenLatestVideoIntent()
+            if (intent == null) {
+                Toast.makeText(this, R.string.camera_aruco_open_video_empty, Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            try {
+                startActivity(intent)
+            } catch (throwable: ActivityNotFoundException) {
+                Toast.makeText(this, R.string.camera_aruco_open_video_failed, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun observePreviewState() {
@@ -128,7 +175,8 @@ class CameraArucoActivity : AppCompatActivity() {
             previewView = previewView,
             analysisExecutor = analysisExecutor,
             analyzer = analyzer,
-            onBound = {
+            onBound = { session ->
+                recordingController.attachSession(session.cameraInfo, session.videoCapture)
                 renderIdleState(getString(R.string.camera_aruco_status_waiting_preview))
             },
             onError = {
@@ -167,6 +215,38 @@ class CameraArucoActivity : AppCompatActivity() {
             R.string.camera_aruco_latency_format,
             result.processingTimeMs
         )
+    }
+
+    private fun renderRecordingState(state: RecordingController.RecordingUiState) {
+        recordingStatusValueView.text = when (state.status) {
+            RecordingController.RecordingStatus.IDLE -> getString(R.string.camera_aruco_recording_status_idle)
+            RecordingController.RecordingStatus.RECORDING -> getString(R.string.camera_aruco_recording_status_recording)
+            RecordingController.RecordingStatus.FINALIZING -> getString(R.string.camera_aruco_recording_status_finalizing)
+            RecordingController.RecordingStatus.COMPLETED -> getString(R.string.camera_aruco_recording_status_completed)
+            RecordingController.RecordingStatus.AUTO_STOPPED -> getString(R.string.camera_aruco_recording_status_auto_stopped)
+            RecordingController.RecordingStatus.ERROR -> getString(R.string.camera_aruco_recording_status_error)
+        }
+        recordingStatusValueView.setTextColor(
+            ContextCompat.getColor(
+                this,
+                when (state.status) {
+                    RecordingController.RecordingStatus.RECORDING -> android.R.color.holo_red_light
+                    RecordingController.RecordingStatus.COMPLETED -> android.R.color.holo_green_light
+                    RecordingController.RecordingStatus.AUTO_STOPPED -> android.R.color.holo_orange_light
+                    RecordingController.RecordingStatus.ERROR -> android.R.color.holo_red_dark
+                    RecordingController.RecordingStatus.FINALIZING -> android.R.color.holo_blue_light
+                    RecordingController.RecordingStatus.IDLE -> android.R.color.white
+                }
+            )
+        )
+        recordingQualityValueView.text = state.qualityLabel
+        recordingResolutionValueView.text = state.resolutionLabel
+        recordingDurationValueView.text = state.durationLabel
+        startRecordingButton.isEnabled = state.qualityLabel != "--" &&
+            state.status != RecordingController.RecordingStatus.RECORDING &&
+            state.status != RecordingController.RecordingStatus.FINALIZING
+        stopRecordingButton.isEnabled = state.status == RecordingController.RecordingStatus.RECORDING
+        openLatestVideoButton.isEnabled = state.latestVideoAvailable
     }
 
     private fun showFatalState(messageRes: Int) {
