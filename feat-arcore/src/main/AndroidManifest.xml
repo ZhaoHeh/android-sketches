@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <application>
+        <meta-data
+            android:name="com.google.ar.core"
+            android:value="optional" />
+
+        <activity
+            android:name=".ArCoreActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="dev.hehe.sketch.action.SKETCH_ENTRY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="dev.hehe.sketch.entry.TITLE"
+                android:value="@string/arcore_title" />
+            <meta-data
+                android:name="dev.hehe.sketch.entry.SUMMARY"
+                android:value="@string/arcore_entry_summary" />
+            <meta-data
+                android:name="dev.hehe.sketch.entry.ORDER"
+                android:value="30" />
+            <meta-data
+                android:name="dev.hehe.sketch.entry.MODULE"
+                android:value="feat-arcore" />
+        </activity>
+    </application>
+
+</manifest>

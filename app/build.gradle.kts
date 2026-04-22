@@ -41,6 +41,7 @@ dependencies {
     implementation(project(":sketch-core"))
     implementation(project(":feat-showcase"))
     implementation(project(":feat-camerax-aruco"))
+    implementation(project(":feat-arcore"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

@@ -6,6 +6,7 @@
 
 - `feat-showcase`：最小示例模块，用来验证模块发现链路
 - `feat-camerax-aruco`：CameraX 预览 + OpenCV arUco 检测示例
+- `feat-arcore`：ARCore 可用性检查与客厅墙面挂画预研入口
 
 ## 工程结构
 
@@ -13,6 +14,7 @@
 - `sketch-core`：实验页发现、排序、跳转的公共逻辑
 - `feat-showcase`：示例实验页
 - `feat-camerax-aruco`：相机预览与 arUco 检测实验页
+- `feat-arcore`：Android ARCore 接入与墙面挂画预研实验页
 
 ## 实验页接入机制
 
@@ -49,4 +51,3 @@
 - 包名前缀统一使用 `dev.hehe.sketch.feat.*`
 - 新能力优先做成独立实验页，而不是直接塞进 `app`
 - 首页只负责展示与分发，不承担具体实验逻辑
-

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="arcore_title">ARCore Wall Art</string>
+    <string name="arcore_entry_summary">打开 AR 预览流，在客厅墙面放置一张虚拟挂画</string>
+
+    <string name="arcore_style_label">当前贴画样式</string>
+    <string name="arcore_style_sunset_name">暮色落日</string>
+    <string name="arcore_style_sunset_subtitle">warm gradient poster</string>
+    <string name="arcore_style_geometry_name">几何构成</string>
+    <string name="arcore_style_geometry_subtitle">clean modern composition</string>
+    <string name="arcore_style_botanic_name">植物静物</string>
+    <string name="arcore_style_botanic_subtitle">soft living-room accent</string>
+
+    <string name="arcore_status_loading_art">正在准备挂画与 AR 场景…</string>
+    <string name="arcore_status_searching">AR 已开启，正在建立空间感知</string>
+    <string name="arcore_status_searching_wall">请缓慢移动手机，先扫描到一面墙</string>
+    <string name="arcore_status_ready">已发现可放置墙面，点一下就能贴画</string>
+    <string name="arcore_status_need_wall">这次点到的不是墙面，请改点垂直平面</string>
+    <string name="arcore_status_placed">挂画已贴上，继续拖拽缩放即可微调</string>
+    <string name="arcore_status_reset">已移除挂画，可以重新贴到别的位置</string>
+    <string name="arcore_status_load_failed">挂画资源加载失败</string>
+    <string name="arcore_status_load_failed_hint">请检查 Sceneform 依赖和设备图形能力。</string>
+
+    <string name="arcore_hint_scan_wall">把镜头对准客厅墙面，左右轻扫几秒钟。</string>
+    <string name="arcore_hint_move_phone">继续移动手机，让 ARCore 收集更多环境特征点。</string>
+    <string name="arcore_hint_tap_wall">看到墙面后，轻点它来放置第一张挂画。</string>
+    <string name="arcore_hint_need_wall">地面和桌面会被忽略，这个 demo 只接受垂直墙面。</string>
+    <string name="arcore_hint_reposition">想换位置就点“重置挂画”，想换风格就点“切换样式”。</string>
+
+    <string name="arcore_action_switch_style">切换样式</string>
+    <string name="arcore_action_reset">重置挂画</string>
+    <string name="arcore_privacy_notice">本实验依赖 Google Play Services for AR (ARCore)，由 Google LLC 提供并受其隐私政策约束。</string>
+
+    <string name="arcore_error_not_installed">设备还没装好 Google Play Services for AR。</string>
+    <string name="arcore_error_service_too_old">Google Play Services for AR 版本过旧。</string>
+    <string name="arcore_error_sdk_too_old">当前 AR SDK 版本过旧。</string>
+    <string name="arcore_error_not_supported">当前设备不支持 ARCore。</string>
+    <string name="arcore_error_install_declined">你取消了 ARCore 安装或更新。</string>
+    <string name="arcore_error_unknown">ARCore 初始化失败，请检查设备与权限。</string>
+</resources>
