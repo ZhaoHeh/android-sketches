@@ -14,10 +14,112 @@
 
 为了在 **Java 11** 环境下成功构建项目，我们对工具链进行了如下配置：
 
-*   **Java 版本**: Java 11 (Amazon Corretto 11.0.29)
+*   **Java 版本**: Java 11 (推荐使用 Azul Zulu JDK 11 LTS)
 *   **Gradle 版本**: 7.6.1 (降级自 8.2 以适配 Java 11)
 *   **Android Gradle Plugin (AGP)**: 7.4.2 (降级自 8.2.0 以适配 Java 11)
 *   **Kotlin 版本**: 1.8.10
+
+### Gradle 运行 JDK
+
+本项目的 Java target 是 11，Gradle 也应使用 **JDK 11** 运行。推荐安装 Azul Zulu JDK 11 LTS：
+
+https://www.azul.com/downloads/?version=java-11-lts&os=macos&architecture=arm-64-bit&package=jdk#zulu
+
+下载页面中请保持：
+
+*   **Java Version**: Java 11 LTS
+*   **Package**: JDK
+*   **Operating System**: 按当前系统选择 Windows 或 macOS
+*   **Architecture**: 按机器选择，例如 Apple Silicon Mac 选择 ARM 64-bit，Intel/AMD Windows 选择 x86 64-bit
+
+#### Windows 安装与配置
+
+1.  在 Azul 下载页选择 **Windows**、**x86 64-bit**、**JDK**，下载 `.msi` 安装包。
+2.  运行 `.msi` 安装包，建议安装到默认目录，例如：
+    ```text
+    C:\Program Files\Zulu\zulu-11
+    ```
+3.  配置 `JAVA_HOME`：
+    *   打开 **Settings > System > About > Advanced system settings**。
+    *   进入 **Environment Variables...**。
+    *   在用户变量或系统变量中新增/修改 `JAVA_HOME`，值设为 Zulu JDK 11 安装目录，例如：
+        ```text
+        C:\Program Files\Zulu\zulu-11
+        ```
+    *   在 `Path` 中新增：
+        ```text
+        %JAVA_HOME%\bin
+        ```
+4.  打开新的 PowerShell 窗口验证：
+    ```powershell
+    java -version
+    $env:JAVA_HOME
+    ```
+    `java -version` 应显示 `11.x` 和 `Zulu`。
+5.  如需只让当前终端临时使用该 JDK：
+    ```powershell
+    $env:JAVA_HOME="C:\Program Files\Zulu\zulu-11"
+    $env:Path="$env:JAVA_HOME\bin;$env:Path"
+    .\gradlew build
+    ```
+
+#### macOS 安装与配置
+
+1.  在 Azul 下载页选择 **macOS**、对应架构、**JDK**：
+    *   Apple Silicon 机器选择 **ARM 64-bit**。
+    *   Intel Mac 选择 **x86 64-bit**。
+2.  下载 `.dmg` 或 `.pkg` 安装包并完成安装。安装后 JDK 通常位于：
+    ```text
+    /Library/Java/JavaVirtualMachines/
+    ```
+3.  查看已安装的 JDK 11：
+    ```bash
+    /usr/libexec/java_home -V
+    ```
+4.  在当前终端临时配置：
+    ```bash
+    export JAVA_HOME=$(/usr/libexec/java_home -v 11)
+    export PATH="$JAVA_HOME/bin:$PATH"
+    ./gradlew build
+    ```
+5.  如需长期生效，按当前 shell 写入配置文件：
+    *   zsh：
+        ```bash
+        echo 'export JAVA_HOME=$(/usr/libexec/java_home -v 11)' >> ~/.zshrc
+        echo 'export PATH="$JAVA_HOME/bin:$PATH"' >> ~/.zshrc
+        source ~/.zshrc
+        ```
+    *   bash：
+        ```bash
+        echo 'export JAVA_HOME=$(/usr/libexec/java_home -v 11)' >> ~/.bash_profile
+        echo 'export PATH="$JAVA_HOME/bin:$PATH"' >> ~/.bash_profile
+        source ~/.bash_profile
+        ```
+6.  验证：
+    ```bash
+    java -version
+    echo "$JAVA_HOME"
+    ```
+    `java -version` 应显示 `11.x` 和 `Zulu`。
+
+#### Android Studio 中配置 Gradle JDK
+
+如果使用 Android Studio，同步项目时还需要让 IDE 的 Gradle 运行环境指向 Zulu JDK 11：
+
+1.  打开 Android Studio。
+2.  进入 **File > Settings** (Windows/Linux) 或 **Android Studio > Preferences** (macOS)。
+3.  打开 **Build, Execution, Deployment > Build Tools > Gradle**。
+4.  在 **Gradle JDK** 中选择已安装的 **Zulu JDK 11**。
+5.  如果列表中没有：
+    *   Windows: 点击 `Add JDK...`，选择 Zulu JDK 11 安装目录，例如 `C:\Program Files\Zulu\zulu-11`。
+    *   macOS: 点击 `Add JDK...`，选择 `/Library/Java/JavaVirtualMachines/` 下的 Zulu JDK 11。
+6.  点击 **Apply** / **OK**，然后重新 **Sync Project with Gradle Files**。
+
+不要把个人机器上的绝对路径写进仓库的 `gradle.properties`。如果确实需要临时固定 Gradle JDK，可以只在本机未提交的配置里使用：
+
+```properties
+org.gradle.java.home=/path/to/zulu-11
+```
 
 ## 3. 关键配置文件
 
@@ -117,7 +219,7 @@ Android Studio 提示升级 Gradle 的建议是基于它检测到的 Java 21 环
 1.  打开 Android Studio。
 2.  进入 **File > Settings** (Windows/Linux) 或 **Android Studio > Preferences** (macOS)。
 3.  导航到 **Build, Execution, Deployment > Build Tools > Gradle**。
-4.  在 **Gradle JDK** 选项中，选择您系统上安装的 **Java 11 JDK** (例如，Amazon Corretto 11)。如果列表中没有，可以点击 `Add JDK...` 或 `Download JDK...`。
+4.  在 **Gradle JDK** 选项中，选择您系统上安装的 **Zulu JDK 11**。如果列表中没有，可以点击 `Add JDK...` 并选择本机 Zulu JDK 11 安装目录。
 5.  点击 **Apply** 和 **OK**。
 6.  重新点击 **Sync Project with Gradle Files**（通常是工具栏上的大象图标）。
 

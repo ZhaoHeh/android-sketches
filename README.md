@@ -36,6 +36,8 @@
 - minSdk：`24`
 - Java target：`11`
 
+Gradle 运行 JDK 请使用 Azul Zulu JDK 11 LTS。Windows 和 macOS 的下载、安装以及 Android Studio Gradle JDK 配置方式见 [SETUP_SUMMARY.md](./SETUP_SUMMARY.md) 的 “Gradle 运行 JDK” 小节。
+
 ## 新增实验模块的建议流程
 
 1. 新建 `feat-*` Android library 模块
