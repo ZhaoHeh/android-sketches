@@ -4,12 +4,12 @@
     <string name="arcore_entry_summary">打开 AR 预览流，在客厅墙面放置一张虚拟挂画</string>
 
     <string name="arcore_style_label">当前贴画样式</string>
-    <string name="arcore_style_sunset_name">暮色落日</string>
-    <string name="arcore_style_sunset_subtitle">warm gradient poster</string>
+    <string name="arcore_style_landscape_name">自然风光</string>
+    <string name="arcore_style_landscape_subtitle">cinematic mountain lake</string>
     <string name="arcore_style_geometry_name">几何构成</string>
-    <string name="arcore_style_geometry_subtitle">clean modern composition</string>
-    <string name="arcore_style_botanic_name">植物静物</string>
-    <string name="arcore_style_botanic_subtitle">soft living-room accent</string>
+    <string name="arcore_style_geometry_subtitle">refined modern abstract</string>
+    <string name="arcore_style_skyline_name">城市天际线</string>
+    <string name="arcore_style_skyline_subtitle">blue hour skyline print</string>
 
     <string name="arcore_status_loading_art">正在准备挂画与 AR 场景…</string>
     <string name="arcore_status_searching">AR 已开启，正在建立空间感知</string>

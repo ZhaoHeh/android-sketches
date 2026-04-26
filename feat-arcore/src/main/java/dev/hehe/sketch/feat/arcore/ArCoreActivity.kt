@@ -16,6 +16,7 @@ import com.google.ar.core.InstantPlacementPoint
 import com.google.ar.core.Plane
 import com.google.ar.core.Point
 import com.google.ar.sceneform.AnchorNode
+import com.google.ar.sceneform.math.Quaternion
 import com.google.ar.sceneform.math.Vector3
 import com.google.ar.sceneform.rendering.FixedHeightViewSizer
 import com.google.ar.sceneform.rendering.ViewRenderable
@@ -38,19 +39,19 @@ class ArCoreActivity : AppCompatActivity() {
 
     private val styles = listOf(
         WallArtStyle(
-            nameRes = R.string.arcore_style_sunset_name,
-            subtitleRes = R.string.arcore_style_sunset_subtitle,
-            artRes = R.drawable.bg_wall_art_sunset
+            nameRes = R.string.arcore_style_landscape_name,
+            subtitleRes = R.string.arcore_style_landscape_subtitle,
+            artRes = R.drawable.wall_art_nature_landscape
         ),
         WallArtStyle(
             nameRes = R.string.arcore_style_geometry_name,
             subtitleRes = R.string.arcore_style_geometry_subtitle,
-            artRes = R.drawable.bg_wall_art_geometry
+            artRes = R.drawable.wall_art_geometric_composition
         ),
         WallArtStyle(
-            nameRes = R.string.arcore_style_botanic_name,
-            subtitleRes = R.string.arcore_style_botanic_subtitle,
-            artRes = R.drawable.bg_wall_art_botanic
+            nameRes = R.string.arcore_style_skyline_name,
+            subtitleRes = R.string.arcore_style_skyline_subtitle,
+            artRes = R.drawable.wall_art_city_skyline
         )
     )
 
@@ -276,6 +277,9 @@ class ArCoreActivity : AppCompatActivity() {
         val artNode = TransformableNode(arFragment.transformationSystem).apply {
             setParent(anchorNode)
             this.renderable = renderable
+            // ViewRenderable defaults closer to a "laid down" card in local space.
+            // Rotate it upright so it becomes a visible wall-facing rectangle.
+            localRotation = Quaternion.axisAngle(Vector3.right(), WALL_ART_UPRIGHT_ROTATION_DEGREES)
             localScale = Vector3(0.85f, 0.85f, 0.85f)
             select()
         }
@@ -375,3 +379,4 @@ private enum class PlacementMode {
 }
 
 private const val APPROXIMATE_WALL_DISTANCE_METERS = 2.0f
+private const val WALL_ART_UPRIGHT_ROTATION_DEGREES = 90f
