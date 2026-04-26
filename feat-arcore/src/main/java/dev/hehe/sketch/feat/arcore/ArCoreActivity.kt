@@ -16,9 +16,9 @@ import com.google.ar.core.InstantPlacementPoint
 import com.google.ar.core.Plane
 import com.google.ar.core.Point
 import com.google.ar.sceneform.AnchorNode
-import com.google.ar.sceneform.math.Quaternion
 import com.google.ar.sceneform.math.Vector3
-import com.google.ar.sceneform.rendering.FixedHeightViewSizer
+import com.google.ar.sceneform.math.Quaternion
+import com.google.ar.sceneform.rendering.DpToMetersViewSizer
 import com.google.ar.sceneform.rendering.ViewRenderable
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
@@ -40,17 +40,14 @@ class ArCoreActivity : AppCompatActivity() {
     private val styles = listOf(
         WallArtStyle(
             nameRes = R.string.arcore_style_landscape_name,
-            subtitleRes = R.string.arcore_style_landscape_subtitle,
             artRes = R.drawable.wall_art_nature_landscape
         ),
         WallArtStyle(
             nameRes = R.string.arcore_style_geometry_name,
-            subtitleRes = R.string.arcore_style_geometry_subtitle,
             artRes = R.drawable.wall_art_geometric_composition
         ),
         WallArtStyle(
             nameRes = R.string.arcore_style_skyline_name,
-            subtitleRes = R.string.arcore_style_skyline_subtitle,
             artRes = R.drawable.wall_art_city_skyline
         )
     )
@@ -166,12 +163,12 @@ class ArCoreActivity : AppCompatActivity() {
                     x = sceneView.width / 2f,
                     y = sceneView.height / 2f
                 )
+                placeButton.isEnabled = wallArtRenderable != null
                 statusView.text = if (readyCandidate != null) {
                     getString(R.string.arcore_status_ready)
                 } else {
                     getString(R.string.arcore_status_searching_wall)
                 }
-                placeButton.isEnabled = readyCandidate != null
 
                 hintView.text = if (readyCandidate != null) {
                     when (readyCandidate.mode) {
@@ -181,7 +178,7 @@ class ArCoreActivity : AppCompatActivity() {
                         PlacementMode.INSTANT -> getString(R.string.arcore_hint_instant_wall)
                     }
                 } else {
-                    getString(R.string.arcore_hint_scan_wall)
+                    getString(R.string.arcore_hint_place_anyway)
                 }
             } else {
                 placeButton.isEnabled = false
@@ -199,7 +196,7 @@ class ArCoreActivity : AppCompatActivity() {
             .thenAccept { renderable ->
                 renderable.isShadowCaster = false
                 renderable.isShadowReceiver = false
-                renderable.sizer = FixedHeightViewSizer(0.55f)
+                renderable.sizer = DpToMetersViewSizer(WALL_ART_DP_PER_METER)
                 renderable.verticalAlignment = ViewRenderable.VerticalAlignment.CENTER
                 renderable.horizontalAlignment = ViewRenderable.HorizontalAlignment.CENTER
                 wallArtRenderable = renderable
@@ -219,9 +216,6 @@ class ArCoreActivity : AppCompatActivity() {
         val renderable = wallArtRenderable ?: return
         val style = styles[currentStyleIndex]
         val renderableView = renderable.view
-        renderableView.findViewById<TextView>(R.id.wallArtTitle).text = getString(style.nameRes)
-        renderableView.findViewById<TextView>(R.id.wallArtSubtitle).text =
-            getString(style.subtitleRes)
         renderableView.findViewById<ImageView>(R.id.wallArtImage).setImageResource(style.artRes)
     }
 
@@ -255,7 +249,6 @@ class ArCoreActivity : AppCompatActivity() {
         if (placementHit == null) {
             statusView.text = getString(R.string.arcore_status_need_wall)
             hintView.text = getString(R.string.arcore_hint_center_retry)
-            placeButton.isEnabled = false
             return
         }
 
@@ -277,9 +270,7 @@ class ArCoreActivity : AppCompatActivity() {
         val artNode = TransformableNode(arFragment.transformationSystem).apply {
             setParent(anchorNode)
             this.renderable = renderable
-            // ViewRenderable defaults closer to a "laid down" card in local space.
-            // Rotate it upright so it becomes a visible wall-facing rectangle.
-            localRotation = Quaternion.axisAngle(Vector3.right(), WALL_ART_UPRIGHT_ROTATION_DEGREES)
+            worldRotation = createCameraFacingWallRotation(anchorNode.worldPosition)
             localScale = Vector3(0.85f, 0.85f, 0.85f)
             select()
         }
@@ -322,6 +313,15 @@ class ArCoreActivity : AppCompatActivity() {
         styleNameView.text = getString(style.nameRes)
     }
 
+    private fun createCameraFacingWallRotation(anchorPosition: Vector3): Quaternion {
+        val cameraPosition = arFragment.arSceneView.scene.camera.worldPosition
+        val toCamera = Vector3.subtract(cameraPosition, anchorPosition)
+        val yawDegrees = Math.toDegrees(
+            kotlin.math.atan2(toCamera.x.toDouble(), toCamera.z.toDouble())
+        ).toFloat()
+        return Quaternion.axisAngle(Vector3(0f, 1f, 0f), yawDegrees)
+    }
+
     private fun findBestPlacementHit(
         frame: Frame,
         x: Float,
@@ -362,7 +362,6 @@ class ArCoreActivity : AppCompatActivity() {
 
 private data class WallArtStyle(
     val nameRes: Int,
-    val subtitleRes: Int,
     val artRes: Int
 )
 
@@ -379,4 +378,4 @@ private enum class PlacementMode {
 }
 
 private const val APPROXIMATE_WALL_DISTANCE_METERS = 2.0f
-private const val WALL_ART_UPRIGHT_ROTATION_DEGREES = 90f
+private const val WALL_ART_DP_PER_METER = 900

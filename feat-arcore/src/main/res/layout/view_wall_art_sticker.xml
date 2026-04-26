@@ -1,31 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="240dp"
-    android:layout_height="wrap_content"
+    android:layout_height="360dp"
     android:background="@drawable/bg_wall_art_frame"
-    android:orientation="vertical"
     android:padding="14dp">
 
     <ImageView
         android:id="@+id/wallArtImage"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop" />
+        android:background="#F2EAD8"
+        android:scaleType="fitCenter" />
 
-    <TextView
-        android:id="@+id/wallArtTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/wallArtSubtitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
-
-</LinearLayout>
+</FrameLayout>

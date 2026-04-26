@@ -5,11 +5,8 @@
 
     <string name="arcore_style_label">当前贴画样式</string>
     <string name="arcore_style_landscape_name">自然风光</string>
-    <string name="arcore_style_landscape_subtitle">cinematic mountain lake</string>
     <string name="arcore_style_geometry_name">几何构成</string>
-    <string name="arcore_style_geometry_subtitle">refined modern abstract</string>
     <string name="arcore_style_skyline_name">城市天际线</string>
-    <string name="arcore_style_skyline_subtitle">blue hour skyline print</string>
 
     <string name="arcore_status_loading_art">正在准备挂画与 AR 场景…</string>
     <string name="arcore_status_searching">AR 已开启，正在建立空间感知</string>
@@ -28,6 +25,7 @@
     <string name="arcore_hint_move_phone">继续移动手机，让 ARCore 收集更多环境特征点。</string>
     <string name="arcore_hint_tap_wall">看到墙面后，轻点它来放置第一张挂画。</string>
     <string name="arcore_hint_center_wall">让屏幕中央准星对准墙面目标区域，再点下方“放置挂画”。</string>
+    <string name="arcore_hint_place_anyway">可以继续缓慢扫描，也可以先点“放置挂画”尝试快速定位。</string>
     <string name="arcore_hint_depth_wall">当前可直接点向墙面区域，ARCore 会用深度结果先帮你贴上去。</string>
     <string name="arcore_hint_feature_wall">当前可直接点向墙面纹理区域，ARCore 会用特征点先帮你贴上去。</string>
     <string name="arcore_hint_instant_wall">如果墙面还没完全成形，也能直接点一下先快速放置。</string>
