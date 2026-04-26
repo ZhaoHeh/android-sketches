@@ -1,6 +1,7 @@
 package dev.hehe.sketch.feat.arcore
 
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -8,8 +9,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.ar.core.Config
+import com.google.ar.core.DepthPoint
+import com.google.ar.core.Frame
 import com.google.ar.core.HitResult
+import com.google.ar.core.InstantPlacementPoint
 import com.google.ar.core.Plane
+import com.google.ar.core.Point
 import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.math.Vector3
 import com.google.ar.sceneform.rendering.FixedHeightViewSizer
@@ -23,6 +28,7 @@ class ArCoreActivity : AppCompatActivity() {
     private lateinit var styleNameView: TextView
     private lateinit var hintView: TextView
     private lateinit var loadingView: View
+    private lateinit var placeButton: MaterialButton
 
     private var wallArtRenderable: ViewRenderable? = null
     private var currentAnchorNode: AnchorNode? = null
@@ -59,6 +65,7 @@ class ArCoreActivity : AppCompatActivity() {
         styleNameView = findViewById(R.id.styleNameView)
         hintView = findViewById(R.id.hintView)
         loadingView = findViewById(R.id.loadingView)
+        placeButton = findViewById(R.id.actionPlaceArtwork)
 
         bindArConfiguration()
         bindControls()
@@ -76,6 +83,7 @@ class ArCoreActivity : AppCompatActivity() {
             config.planeFindingMode = Config.PlaneFindingMode.HORIZONTAL_AND_VERTICAL
             config.lightEstimationMode = Config.LightEstimationMode.ENVIRONMENTAL_HDR
             config.focusMode = Config.FocusMode.AUTO
+            config.instantPlacementMode = Config.InstantPlacementMode.LOCAL_Y_UP
             config.depthMode = if (session.isDepthModeSupported(Config.DepthMode.AUTOMATIC)) {
                 Config.DepthMode.AUTOMATIC
             } else {
@@ -91,10 +99,15 @@ class ArCoreActivity : AppCompatActivity() {
             updateRenderableView()
         }
 
+        placeButton.setOnClickListener {
+            tryPlaceAtScreenCenter()
+        }
+
         findViewById<MaterialButton>(R.id.actionResetPlacement).setOnClickListener {
             clearPlacedArt()
             statusView.text = getString(R.string.arcore_status_reset)
             hintView.text = getString(R.string.arcore_hint_scan_wall)
+            placeButton.isEnabled = false
         }
     }
 
@@ -115,19 +128,25 @@ class ArCoreActivity : AppCompatActivity() {
 
     private fun bindArScene(sceneView: com.google.ar.sceneform.ArSceneView) {
         arFragment.setOnTapArPlaneListener { hitResult, plane, _ ->
-            if (plane.type != Plane.Type.VERTICAL) {
-                statusView.text = getString(R.string.arcore_status_need_wall)
-                hintView.text = getString(R.string.arcore_hint_need_wall)
-                return@setOnTapArPlaneListener
-            }
-
             val renderable = wallArtRenderable
             if (renderable == null) {
                 Toast.makeText(this, R.string.arcore_status_loading_art, Toast.LENGTH_SHORT).show()
                 return@setOnTapArPlaneListener
             }
 
-            placeWallArt(hitResult, renderable)
+            if (plane.type == Plane.Type.VERTICAL) {
+                placeWallArt(hitResult, renderable, PlacementMode.VERTICAL_PLANE)
+            }
+        }
+
+        sceneView.scene.setOnTouchListener { _, motionEvent ->
+            if (motionEvent.action == MotionEvent.ACTION_UP &&
+                currentAnchorNode == null &&
+                wallArtRenderable != null
+            ) {
+                tryPlaceFromTouch(sceneView, motionEvent)
+            }
+            false
         }
 
         sceneView.scene.addOnUpdateListener {
@@ -136,21 +155,35 @@ class ArCoreActivity : AppCompatActivity() {
             if (camera.trackingState != com.google.ar.core.TrackingState.TRACKING) {
                 statusView.text = getString(R.string.arcore_status_searching)
                 hintView.text = getString(R.string.arcore_hint_move_phone)
+                placeButton.isEnabled = false
                 return@addOnUpdateListener
             }
 
             if (currentAnchorNode == null) {
-                val hasVerticalPlane = hasTrackedVerticalPlane()
-                statusView.text = if (hasVerticalPlane) {
+                val readyCandidate = findBestPlacementHit(
+                    frame = frame,
+                    x = sceneView.width / 2f,
+                    y = sceneView.height / 2f
+                )
+                statusView.text = if (readyCandidate != null) {
                     getString(R.string.arcore_status_ready)
                 } else {
                     getString(R.string.arcore_status_searching_wall)
                 }
-                hintView.text = if (hasVerticalPlane) {
-                    getString(R.string.arcore_hint_tap_wall)
+                placeButton.isEnabled = readyCandidate != null
+
+                hintView.text = if (readyCandidate != null) {
+                    when (readyCandidate.mode) {
+                        PlacementMode.VERTICAL_PLANE -> getString(R.string.arcore_hint_center_wall)
+                        PlacementMode.DEPTH_POINT -> getString(R.string.arcore_hint_depth_wall)
+                        PlacementMode.FEATURE_POINT -> getString(R.string.arcore_hint_feature_wall)
+                        PlacementMode.INSTANT -> getString(R.string.arcore_hint_instant_wall)
+                    }
                 } else {
                     getString(R.string.arcore_hint_scan_wall)
                 }
+            } else {
+                placeButton.isEnabled = false
             }
         }
     }
@@ -166,6 +199,8 @@ class ArCoreActivity : AppCompatActivity() {
                 renderable.isShadowCaster = false
                 renderable.isShadowReceiver = false
                 renderable.sizer = FixedHeightViewSizer(0.55f)
+                renderable.verticalAlignment = ViewRenderable.VerticalAlignment.CENTER
+                renderable.horizontalAlignment = ViewRenderable.HorizontalAlignment.CENTER
                 wallArtRenderable = renderable
                 updateRenderableView()
                 loadingView.visibility = View.GONE
@@ -189,7 +224,48 @@ class ArCoreActivity : AppCompatActivity() {
         renderableView.findViewById<ImageView>(R.id.wallArtImage).setImageResource(style.artRes)
     }
 
-    private fun placeWallArt(hitResult: HitResult, renderable: ViewRenderable) {
+    private fun tryPlaceFromTouch(
+        sceneView: com.google.ar.sceneform.ArSceneView,
+        motionEvent: MotionEvent
+    ) {
+        val frame = sceneView.arFrame ?: return
+        val renderable = wallArtRenderable ?: return
+        val placementHit = findBestPlacementHit(frame, motionEvent.x, motionEvent.y)
+
+        if (placementHit == null) {
+            statusView.text = getString(R.string.arcore_status_need_wall)
+            hintView.text = getString(R.string.arcore_hint_need_wall)
+            return
+        }
+
+        placeWallArt(placementHit.hitResult, renderable, placementHit.mode)
+    }
+
+    private fun tryPlaceAtScreenCenter() {
+        val sceneView = arFragment.arSceneView ?: return
+        val frame = sceneView.arFrame ?: return
+        val renderable = wallArtRenderable ?: return
+        val placementHit = findBestPlacementHit(
+            frame = frame,
+            x = sceneView.width / 2f,
+            y = sceneView.height / 2f
+        )
+
+        if (placementHit == null) {
+            statusView.text = getString(R.string.arcore_status_need_wall)
+            hintView.text = getString(R.string.arcore_hint_center_retry)
+            placeButton.isEnabled = false
+            return
+        }
+
+        placeWallArt(placementHit.hitResult, renderable, placementHit.mode)
+    }
+
+    private fun placeWallArt(
+        hitResult: HitResult,
+        renderable: ViewRenderable,
+        placementMode: PlacementMode
+    ) {
         clearPlacedArt()
 
         val anchor = hitResult.createAnchor()
@@ -207,8 +283,25 @@ class ArCoreActivity : AppCompatActivity() {
         currentAnchorNode = anchorNode
         currentArtNode = artNode
 
-        statusView.text = getString(R.string.arcore_status_placed)
-        hintView.text = getString(R.string.arcore_hint_reposition)
+        when (placementMode) {
+            PlacementMode.VERTICAL_PLANE -> {
+                statusView.text = getString(R.string.arcore_status_placed)
+                hintView.text = getString(R.string.arcore_hint_reposition)
+            }
+            PlacementMode.DEPTH_POINT -> {
+                statusView.text = getString(R.string.arcore_status_placed_depth)
+                hintView.text = getString(R.string.arcore_hint_reposition)
+            }
+            PlacementMode.FEATURE_POINT -> {
+                statusView.text = getString(R.string.arcore_status_placed_feature)
+                hintView.text = getString(R.string.arcore_hint_reposition)
+            }
+            PlacementMode.INSTANT -> {
+                statusView.text = getString(R.string.arcore_status_placed_instant)
+                hintView.text = getString(R.string.arcore_hint_refine_wall)
+            }
+        }
+        placeButton.isEnabled = false
     }
 
     private fun clearPlacedArt() {
@@ -225,12 +318,41 @@ class ArCoreActivity : AppCompatActivity() {
         styleNameView.text = getString(style.nameRes)
     }
 
-    private fun hasTrackedVerticalPlane(): Boolean {
-        val session = arFragment.arSceneView.session ?: return false
-        return session.getAllTrackables(Plane::class.java).any { plane ->
-            plane.type == Plane.Type.VERTICAL &&
-                plane.trackingState == com.google.ar.core.TrackingState.TRACKING
+    private fun findBestPlacementHit(
+        frame: Frame,
+        x: Float,
+        y: Float
+    ): PlacementHit? {
+        val standardHit = frame.hitTest(x, y)
+
+        standardHit.firstOrNull { hit ->
+            val trackable = hit.trackable
+            trackable is Plane &&
+                trackable.type == Plane.Type.VERTICAL &&
+                trackable.isPoseInPolygon(hit.hitPose)
+        }?.let { hit ->
+            return PlacementHit(hit, PlacementMode.VERTICAL_PLANE)
         }
+
+        standardHit.firstOrNull { hit -> hit.trackable is DepthPoint }?.let { hit ->
+            return PlacementHit(hit, PlacementMode.DEPTH_POINT)
+        }
+
+        standardHit.firstOrNull { hit ->
+            val trackable = hit.trackable
+            trackable is Point &&
+                trackable.orientationMode == Point.OrientationMode.ESTIMATED_SURFACE_NORMAL
+        }?.let { hit ->
+            return PlacementHit(hit, PlacementMode.FEATURE_POINT)
+        }
+
+        frame.hitTestInstantPlacement(x, y, APPROXIMATE_WALL_DISTANCE_METERS)
+            .firstOrNull { hit -> hit.trackable is InstantPlacementPoint }
+            ?.let { hit ->
+                return PlacementHit(hit, PlacementMode.INSTANT)
+            }
+
+        return null
     }
 }
 
@@ -239,3 +361,17 @@ private data class WallArtStyle(
     val subtitleRes: Int,
     val artRes: Int
 )
+
+private data class PlacementHit(
+    val hitResult: HitResult,
+    val mode: PlacementMode
+)
+
+private enum class PlacementMode {
+    VERTICAL_PLANE,
+    DEPTH_POINT,
+    FEATURE_POINT,
+    INSTANT
+}
+
+private const val APPROXIMATE_WALL_DISTANCE_METERS = 2.0f

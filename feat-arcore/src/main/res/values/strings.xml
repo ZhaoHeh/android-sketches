@@ -14,9 +14,12 @@
     <string name="arcore_status_loading_art">正在准备挂画与 AR 场景…</string>
     <string name="arcore_status_searching">AR 已开启，正在建立空间感知</string>
     <string name="arcore_status_searching_wall">请缓慢移动手机，先扫描到一面墙</string>
-    <string name="arcore_status_ready">已发现可放置墙面，点一下就能贴画</string>
+    <string name="arcore_status_ready">屏幕中心已对准可放置位置，可以点“放置挂画”</string>
     <string name="arcore_status_need_wall">这次点到的不是墙面，请改点垂直平面</string>
     <string name="arcore_status_placed">挂画已贴上，继续拖拽缩放即可微调</string>
+    <string name="arcore_status_placed_depth">已用深度命中贴上挂画，继续缓慢扫描可让位置更稳</string>
+    <string name="arcore_status_placed_feature">已用特征点贴上挂画，继续扫描墙面可让锚点更稳定</string>
+    <string name="arcore_status_placed_instant">已快速贴上挂画，稍等 ARCore 继续收敛真实墙面</string>
     <string name="arcore_status_reset">已移除挂画，可以重新贴到别的位置</string>
     <string name="arcore_status_load_failed">挂画资源加载失败</string>
     <string name="arcore_status_load_failed_hint">请检查 Sceneform 依赖和设备图形能力。</string>
@@ -24,12 +27,20 @@
     <string name="arcore_hint_scan_wall">把镜头对准客厅墙面，左右轻扫几秒钟。</string>
     <string name="arcore_hint_move_phone">继续移动手机，让 ARCore 收集更多环境特征点。</string>
     <string name="arcore_hint_tap_wall">看到墙面后，轻点它来放置第一张挂画。</string>
+    <string name="arcore_hint_center_wall">让屏幕中央准星对准墙面目标区域，再点下方“放置挂画”。</string>
+    <string name="arcore_hint_depth_wall">当前可直接点向墙面区域，ARCore 会用深度结果先帮你贴上去。</string>
+    <string name="arcore_hint_feature_wall">当前可直接点向墙面纹理区域，ARCore 会用特征点先帮你贴上去。</string>
+    <string name="arcore_hint_instant_wall">如果墙面还没完全成形，也能直接点一下先快速放置。</string>
     <string name="arcore_hint_need_wall">地面和桌面会被忽略，这个 demo 只接受垂直墙面。</string>
+    <string name="arcore_hint_center_retry">请把中央准星重新对准墙面，再尝试点击“放置挂画”。</string>
     <string name="arcore_hint_reposition">想换位置就点“重置挂画”，想换风格就点“切换样式”。</string>
+    <string name="arcore_hint_refine_wall">挂画先放好了，继续环顾墙面几秒钟，位置会更接近真实表面。</string>
 
+    <string name="arcore_action_place">放置挂画</string>
     <string name="arcore_action_switch_style">切换样式</string>
     <string name="arcore_action_reset">重置挂画</string>
     <string name="arcore_privacy_notice">本实验依赖 Google Play Services for AR (ARCore)，由 Google LLC 提供并受其隐私政策约束。</string>
+    <string name="arcore_crosshair_description">AR 放置准星</string>
 
     <string name="arcore_error_not_installed">设备还没装好 Google Play Services for AR。</string>
     <string name="arcore_error_service_too_old">Google Play Services for AR 版本过旧。</string>
