@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="color_primary">#26D0A8</color>
+    <color name="color_primary_variant">#172D2B</color>
+    <color name="color_on_primary">#061312</color>
+    <color name="color_secondary">#6EA8FF</color>
+    <color name="color_secondary_variant">#3D73D8</color>
+    <color name="color_on_secondary">#07111F</color>
+    <color name="color_surface">#171C24</color>
+    <color name="color_background">#0C1016</color>
+    <color name="color_background_elevated">#202733</color>
+    <color name="color_accent_code">#A9C7FF</color>
+    <color name="color_warning">#F5C76B</color>
+    <color name="color_danger">#FF7A90</color>
+    <color name="color_outline">#33404F</color>
+    <color name="color_text_primary">#F4F7FA</color>
+    <color name="color_text_secondary">#AAB6C3</color>
+    <color name="color_text_muted">#718093</color>
+    <color name="color_pill_surface">#18212B</color>
+    <color name="color_pill_outline">#33404F</color>
+    <color name="color_entry_badge_surface">#20362F</color>
+    <color name="color_entry_badge_outline">#315C52</color>
+    <color name="color_ripple">#293746</color>
+    <color name="ic_launcher_background">#172D2B</color>
+</resources>

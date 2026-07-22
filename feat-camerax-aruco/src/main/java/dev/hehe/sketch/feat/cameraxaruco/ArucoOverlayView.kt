@@ -2,11 +2,11 @@ package dev.hehe.sketch.feat.cameraxaruco
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PointF
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.content.ContextCompat
 import kotlin.math.max
 
 class ArucoOverlayView @JvmOverloads constructor(
@@ -15,18 +15,18 @@ class ArucoOverlayView @JvmOverloads constructor(
 ) : View(context, attrs) {
 
     private val borderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#00E676")
+        color = ContextCompat.getColor(context, R.color.camera_marker_positive)
         style = Paint.Style.STROKE
         strokeWidth = 6f
     }
 
     private val idBadgePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#CC111111")
+        color = ContextCompat.getColor(context, R.color.camera_overlay_badge)
         style = Paint.Style.FILL
     }
 
     private val idTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.WHITE
+        color = ContextCompat.getColor(context, R.color.camera_overlay_text)
         textSize = 34f
     }
 

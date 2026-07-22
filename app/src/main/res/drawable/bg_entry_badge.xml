@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#20362F" />
+    <solid android:color="@color/color_entry_badge_surface" />
     <stroke
         android:width="1dp"
-        android:color="#315C52" />
+        android:color="@color/color_entry_badge_outline" />
     <corners android:radius="999dp" />
     <padding
         android:left="10dp"

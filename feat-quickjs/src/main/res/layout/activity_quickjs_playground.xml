@@ -160,7 +160,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/quickjs_run"
-                        android:textColor="@color/qjs_background"
+                        android:textColor="@color/qjs_on_primary"
                         app:backgroundTint="@color/qjs_primary" />
 
                     <Button

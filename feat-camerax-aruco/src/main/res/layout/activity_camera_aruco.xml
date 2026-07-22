@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@color/camera_preview_scrim"
     tools:context=".CameraArucoActivity">
 
     <FrameLayout
         android:id="@+id/previewContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#000000"
+        android:background="@color/camera_preview_scrim"
         app:layout_constraintBottom_toTopOf="@id/bottomBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,12 +32,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="#88000000"
+            android:background="@color/camera_status_surface"
             android:paddingHorizontal="16dp"
             android:paddingVertical="10dp"
             android:text="@string/camera_aruco_status_initializing"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/camera_overlay_text"
             tools:text="正在启动相机..." />
 
         <ImageButton
@@ -47,11 +47,11 @@
             android:layout_gravity="top|end"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:background="#88000000"
+            android:background="@color/camera_status_surface"
             android:contentDescription="@string/camera_aruco_open_video_content_description"
             android:padding="10dp"
             android:src="@drawable/ic_latest_video"
-            android:tint="#FFFFFF"
+            android:tint="@color/camera_overlay_text"
             tools:ignore="SpeakableTextPresentCheck" />
 
     </FrameLayout>
@@ -60,7 +60,7 @@
         android:id="@+id/bottomBar"
         android:layout_width="0dp"
         android:layout_height="112dp"
-        android:background="#CC000000"
+        android:background="@color/camera_panel_surface"
         android:paddingHorizontal="20dp"
         android:paddingTop="12dp"
         android:paddingBottom="16dp"
@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/camera_aruco_marker_count_format"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                android:textColor="#FF7A7A"
+                android:textColor="@color/camera_marker_negative"
                 android:textStyle="bold"
                 tools:text="0 arUco" />
         </LinearLayout>
@@ -114,7 +114,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
-                android:background="@android:color/holo_red_light" />
+                android:background="@color/camera_record_indicator" />
         </FrameLayout>
 
         <LinearLayout
@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/camera_aruco_resolution_empty"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                android:textColor="#F6D365"
+                android:textColor="@color/camera_resolution_text"
                 android:textStyle="bold"
                 tools:text="3840x2160" />
         </LinearLayout>

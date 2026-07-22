@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="camera_preview_scrim">#000000</color>
+    <color name="camera_panel_surface">#CC000000</color>
+    <color name="camera_status_surface">#88000000</color>
+    <color name="camera_overlay_text">#FFFFFF</color>
+    <color name="camera_marker_positive">#6BCB77</color>
+    <color name="camera_marker_negative">#E57373</color>
+    <color name="camera_record_ring">#FFFFFF</color>
+    <color name="camera_record_indicator">#FF4D4F</color>
+    <color name="camera_resolution_text">#F6D365</color>
+    <color name="camera_overlay_badge">#CC111111</color>
+</resources>

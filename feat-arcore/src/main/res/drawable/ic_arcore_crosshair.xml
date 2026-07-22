@@ -7,30 +7,30 @@
     <path
         android:fillColor="#00000000"
         android:pathData="M21,5 L21,13"
-        android:strokeColor="#F9F6EF"
+        android:strokeColor="@color/arcore_crosshair"
         android:strokeLineCap="round"
         android:strokeWidth="2.2" />
     <path
         android:fillColor="#00000000"
         android:pathData="M21,29 L21,37"
-        android:strokeColor="#F9F6EF"
+        android:strokeColor="@color/arcore_crosshair"
         android:strokeLineCap="round"
         android:strokeWidth="2.2" />
     <path
         android:fillColor="#00000000"
         android:pathData="M5,21 L13,21"
-        android:strokeColor="#F9F6EF"
+        android:strokeColor="@color/arcore_crosshair"
         android:strokeLineCap="round"
         android:strokeWidth="2.2" />
     <path
         android:fillColor="#00000000"
         android:pathData="M29,21 L37,21"
-        android:strokeColor="#F9F6EF"
+        android:strokeColor="@color/arcore_crosshair"
         android:strokeLineCap="round"
         android:strokeWidth="2.2" />
     <path
         android:fillColor="#00000000"
         android:pathData="M21,15.5 A5.5,5.5 0 1,1 20.99,15.5"
-        android:strokeColor="#F9F6EF"
+        android:strokeColor="@color/arcore_crosshair"
         android:strokeWidth="2.2" />
 </vector>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="qjs_background">#0B0F15</color>
+    <color name="qjs_surface">#151B23</color>
+    <color name="qjs_surface_alt">#1B2330</color>
+    <color name="qjs_editor">#090D13</color>
+    <color name="qjs_output">#10161E</color>
+    <color name="qjs_outline">#303B4A</color>
+    <color name="qjs_outline_strong">#466071</color>
+    <color name="qjs_primary">#27D3A6</color>
+    <color name="qjs_blue">#7DB3FF</color>
+    <color name="qjs_warning">#F6C96D</color>
+    <color name="qjs_danger">#FF7B90</color>
+    <color name="qjs_text_primary">#F3F7FB</color>
+    <color name="qjs_text_secondary">#ACB8C6</color>
+    <color name="qjs_text_muted">#748395</color>
+    <color name="qjs_status_surface">#142B27</color>
+    <color name="qjs_status_outline">#2D685E</color>
+    <color name="qjs_on_primary">#061312</color>
+</resources>

@@ -10,7 +10,7 @@
     app:cardBackgroundColor="@color/color_surface"
     app:cardCornerRadius="8dp"
     app:cardElevation="0dp"
-    app:rippleColor="#293746"
+    app:rippleColor="@color/color_ripple"
     app:strokeColor="@color/color_outline"
     app:strokeWidth="1dp">
 

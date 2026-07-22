@@ -214,25 +214,25 @@ class CameraArucoActivity : AppCompatActivity() {
     }
 
     private fun applyMarkerStateColor(markerCount: Int) {
-        val textColor = if (markerCount > 0) {
-            Color.parseColor("#6BCB77")
+        val colorRes = if (markerCount > 0) {
+            R.color.camera_marker_positive
         } else {
-            Color.parseColor("#E57373")
+            R.color.camera_marker_negative
         }
-        detectionCountValueView.setTextColor(textColor)
+        detectionCountValueView.setTextColor(ContextCompat.getColor(this, colorRes))
     }
 
     private fun applyRecordingButtonStyle(isRecording: Boolean) {
         val outer = GradientDrawable().apply {
             shape = GradientDrawable.OVAL
-            setStroke(6, Color.WHITE)
+            setStroke(6, ContextCompat.getColor(this@CameraArucoActivity, R.color.camera_record_ring))
             setColor(Color.TRANSPARENT)
         }
         recordOuterRingView.background = outer
 
         val inner = GradientDrawable().apply {
             shape = if (isRecording) GradientDrawable.RECTANGLE else GradientDrawable.OVAL
-            setColor(Color.parseColor("#FF4D4F"))
+            setColor(ContextCompat.getColor(this@CameraArucoActivity, R.color.camera_record_indicator))
             cornerRadius = if (isRecording) 16f else 999f
         }
         recordInnerIndicatorView.background = inner

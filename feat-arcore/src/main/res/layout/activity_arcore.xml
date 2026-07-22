@@ -16,6 +16,7 @@
         android:layout_gravity="top"
         android:layout_margin="16dp"
         android:alpha="0.92"
+        app:cardBackgroundColor="@color/arcore_panel_surface"
         app:cardCornerRadius="24dp">
 
         <LinearLayout
@@ -70,6 +71,7 @@
         android:layout_gravity="bottom"
         android:layout_margin="16dp"
         android:alpha="0.94"
+        app:cardBackgroundColor="@color/arcore_panel_surface"
         app:cardCornerRadius="24dp">
 
         <LinearLayout

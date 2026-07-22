@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="qjs_background">#0B0F15</color>
-    <color name="qjs_surface">#151B23</color>
-    <color name="qjs_surface_alt">#1B2330</color>
-    <color name="qjs_editor">#090D13</color>
-    <color name="qjs_outline">#303B4A</color>
-    <color name="qjs_outline_strong">#466071</color>
-    <color name="qjs_primary">#27D3A6</color>
-    <color name="qjs_blue">#7DB3FF</color>
-    <color name="qjs_warning">#F6C96D</color>
-    <color name="qjs_danger">#FF7B90</color>
-    <color name="qjs_text_primary">#F3F7FB</color>
-    <color name="qjs_text_secondary">#ACB8C6</color>
-    <color name="qjs_text_muted">#748395</color>
+    <color name="qjs_background">#F6F8FB</color>
+    <color name="qjs_surface">#FFFFFF</color>
+    <color name="qjs_surface_alt">#EEF3F8</color>
+    <color name="qjs_editor">#FFFFFF</color>
+    <color name="qjs_output">#FFFFFF</color>
+    <color name="qjs_outline">#D2DAE5</color>
+    <color name="qjs_outline_strong">#AAB8C8</color>
+    <color name="qjs_primary">#007F67</color>
+    <color name="qjs_blue">#1E5AAE</color>
+    <color name="qjs_warning">#8A5A00</color>
+    <color name="qjs_danger">#BA2444</color>
+    <color name="qjs_text_primary">#111827</color>
+    <color name="qjs_text_secondary">#4B5563</color>
+    <color name="qjs_text_muted">#6B7280</color>
+    <color name="qjs_status_surface">#E5F4EF</color>
+    <color name="qjs_status_outline">#A9D3C7</color>
+    <color name="qjs_on_primary">#FFFFFF</color>
 </resources>
