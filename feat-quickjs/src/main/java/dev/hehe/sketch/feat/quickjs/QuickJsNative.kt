@@ -9,7 +9,7 @@ internal object QuickJsNative {
     }
 
     external fun create(
-        callbacks: NativeCallbacks,
+        hostBridge: QuickJsToHostBridge,
         timeoutMs: Long,
         memoryLimitBytes: Long,
         maxStackBytes: Long
@@ -28,11 +28,11 @@ internal object QuickJsNative {
 }
 
 @Keep
-internal class NativeCallbacks(
-    private val callback: (Long, ByteArray, ByteArray) -> Unit
+internal class QuickJsToHostBridge(
+    private val dispatchAction: (Long, ByteArray, ByteArray) -> Unit
 ) {
     @Keep
-    fun onHostCall(callId: Long, methodUtf8: ByteArray, argsUtf8: ByteArray) {
-        callback(callId, methodUtf8, argsUtf8)
+    fun dispatchRequest(callId: Long, methodUtf8: ByteArray, argsUtf8: ByteArray) {
+        dispatchAction(callId, methodUtf8, argsUtf8)
     }
 }

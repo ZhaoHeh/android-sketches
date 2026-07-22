@@ -62,11 +62,11 @@ class QuickJsRunner(
     ) {
         var handle = 0L
         val result = runCatching {
-            val callbacks = NativeCallbacks { callId, method, args ->
+            val hostBridge = QuickJsToHostBridge { callId, method, args ->
                 dispatchHostCall(state, callId, method, args)
             }
             handle = QuickJsNative.create(
-                callbacks,
+                hostBridge,
                 options.timeoutMs,
                 options.memoryLimitBytes,
                 options.maxStackBytes

@@ -34,8 +34,8 @@ struct PendingCall {
 
 struct Session {
     JavaVM *vm = nullptr;
-    jobject callbacks = nullptr;
-    jmethodID on_host_call = nullptr;
+    jobject host_bridge = nullptr;
+    jmethodID dispatch_request = nullptr;
     int64_t timeout_ms = 0;
     size_t memory_limit = 0;
     size_t stack_limit = 0;
@@ -293,8 +293,8 @@ JSValue android_invoke(
     jbyteArray method_bytes = to_byte_array(env, method);
     jbyteArray args_bytes = to_byte_array(env, args);
     env->CallVoidMethod(
-        session->callbacks,
-        session->on_host_call,
+        session->host_bridge,
+        session->dispatch_request,
         static_cast<jlong>(call_id),
         method_bytes,
         args_bytes);
@@ -528,19 +528,19 @@ Outcome evaluate(Session *session, const std::string &source) {
 jlong native_create(
     JNIEnv *env,
     jobject,
-    jobject callbacks,
+    jobject host_bridge,
     jlong timeout_ms,
     jlong memory_limit,
     jlong stack_limit) {
-    if (callbacks == nullptr || timeout_ms <= 0 || memory_limit <= 0 || stack_limit <= 0) return 0;
+    if (host_bridge == nullptr || timeout_ms <= 0 || memory_limit <= 0 || stack_limit <= 0) return 0;
     auto *session = new Session();
     env->GetJavaVM(&session->vm);
-    session->callbacks = env->NewGlobalRef(callbacks);
-    jclass callback_class = env->GetObjectClass(callbacks);
-    session->on_host_call = env->GetMethodID(callback_class, "onHostCall", "(J[B[B)V");
-    env->DeleteLocalRef(callback_class);
-    if (session->callbacks == nullptr || session->on_host_call == nullptr) {
-        if (session->callbacks != nullptr) env->DeleteGlobalRef(session->callbacks);
+    session->host_bridge = env->NewGlobalRef(host_bridge);
+    jclass bridge_class = env->GetObjectClass(host_bridge);
+    session->dispatch_request = env->GetMethodID(bridge_class, "dispatchRequest", "(J[B[B)V");
+    env->DeleteLocalRef(bridge_class);
+    if (session->host_bridge == nullptr || session->dispatch_request == nullptr) {
+        if (session->host_bridge != nullptr) env->DeleteGlobalRef(session->host_bridge);
         delete session;
         return 0;
     }
@@ -589,12 +589,12 @@ void native_destroy(JNIEnv *env, jobject, jlong handle) {
     if (session == nullptr) return;
     session->cancelled.store(true);
     session->condition.notify_all();
-    if (session->callbacks != nullptr) env->DeleteGlobalRef(session->callbacks);
+    if (session->host_bridge != nullptr) env->DeleteGlobalRef(session->host_bridge);
     delete session;
 }
 
 static const JNINativeMethod methods[] = {
-    {"create", "(Ldev/hehe/sketch/feat/quickjs/NativeCallbacks;JJJ)J", reinterpret_cast<void *>(native_create)},
+    {"create", "(Ldev/hehe/sketch/feat/quickjs/QuickJsToHostBridge;JJJ)J", reinterpret_cast<void *>(native_create)},
     {"eval", "(J[B)[B", reinterpret_cast<void *>(native_eval)},
     {"completeHostCall", "(JJZ[B)Z", reinterpret_cast<void *>(native_complete_host_call)},
     {"cancel", "(J)V", reinterpret_cast<void *>(native_cancel)},
