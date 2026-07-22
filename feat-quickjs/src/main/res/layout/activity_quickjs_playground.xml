@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/qjs_background"
     android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:paddingStart="18dp"
+        android:paddingTop="24dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="28dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/quickjs_title"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            android:textColor="@color/qjs_text_primary"
             android:textStyle="bold" />
 
         <TextView
@@ -23,159 +29,355 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:text="@string/quickjs_summary"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/quickjs_case_label"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/caseSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:labelFor="@id/sourceEditor"
-            android:text="@string/quickjs_source_label"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/sourceEditor"
-            android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:background="?attr/colorSurface"
-            android:fontFamily="monospace"
-            android:gravity="top|start"
-            android:inputType="textMultiLine|textNoSuggestions"
-            android:padding="12dp"
-            android:scrollbars="vertical"
-            android:textSize="13sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/timeoutEditor"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/quickjs_timeout_hint"
-                android:inputType="number" />
-
-            <EditText
-                android:id="@+id/memoryEditor"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:hint="@string/quickjs_memory_hint"
-                android:inputType="number" />
-
-            <EditText
-                android:id="@+id/stackEditor"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:hint="@string/quickjs_stack_hint"
-                android:inputType="number" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="end"
-            android:orientation="horizontal"
-            tools:ignore="ButtonStyle">
-
-            <Button
-                android:id="@+id/resetButton"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/quickjs_reset" />
-
-            <Button
-                android:id="@+id/runButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/quickjs_run" />
-
-            <Button
-                android:id="@+id/stopButton"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:enabled="false"
-                android:text="@string/quickjs_stop" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/runAllButton"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/quickjs_run_all" />
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textColor="@color/qjs_text_secondary" />
 
         <TextView
             android:id="@+id/statusView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:background="@drawable/bg_qjs_status"
             android:text="@string/quickjs_status_idle"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:textColor="@color/qjs_primary"
             android:textStyle="bold" />
 
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            app:cardBackgroundColor="@color/qjs_surface"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/qjs_outline"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+            android:text="@string/quickjs_case_label"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textColor="@color/qjs_text_secondary"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/caseSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_qjs_field"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:popupBackground="@color/qjs_surface_alt" />
+
+                <Button
+                    android:id="@+id/runAllButton"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/quickjs_run_all"
+                    android:textColor="@color/qjs_blue"
+                    app:strokeColor="@color/qjs_outline_strong" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:cardBackgroundColor="@color/qjs_surface"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/qjs_outline"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:labelFor="@id/sourceEditor"
+                        android:text="@string/quickjs_source_label"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                        android:textColor="@color/qjs_text_secondary"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/resetButton"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="0dp"
+                        android:text="@string/quickjs_reset"
+                        android:textColor="@color/qjs_text_secondary" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/sourceEditor"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_qjs_editor"
+                    android:fontFamily="monospace"
+                    android:gravity="top|start"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:padding="14dp"
+                    android:scrollbars="vertical"
+                    android:textColor="@color/qjs_text_primary"
+                    android:textColorHint="@color/qjs_text_muted"
+                    android:textCursorDrawable="@null"
+                    android:textSize="13sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="end"
+                    android:orientation="horizontal"
+                    tools:ignore="ButtonStyle">
+
+                    <Button
+                        android:id="@+id/runButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/quickjs_run"
+                        android:textColor="@color/qjs_background"
+                        app:backgroundTint="@color/qjs_primary" />
+
+                    <Button
+                        android:id="@+id/stopButton"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:enabled="false"
+                        android:text="@string/quickjs_stop"
+                        android:textColor="@color/qjs_danger"
+                        app:strokeColor="@color/qjs_danger" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:cardBackgroundColor="@color/qjs_surface"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/qjs_outline"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quickjs_limits_label"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textColor="@color/qjs_text_secondary"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/timeoutEditor"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_qjs_field"
+                        android:hint="@string/quickjs_timeout_hint"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:textColor="@color/qjs_text_primary"
+                        android:textColorHint="@color/qjs_text_muted"
+                        android:textCursorDrawable="@null"
+                        android:textSize="13sp" />
+
+                    <EditText
+                        android:id="@+id/memoryEditor"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_qjs_field"
+                        android:hint="@string/quickjs_memory_hint"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:textColor="@color/qjs_text_primary"
+                        android:textColorHint="@color/qjs_text_muted"
+                        android:textCursorDrawable="@null"
+                        android:textSize="13sp" />
+
+                    <EditText
+                        android:id="@+id/stackEditor"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_qjs_field"
+                        android:hint="@string/quickjs_stack_hint"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:textColor="@color/qjs_text_primary"
+                        android:textColorHint="@color/qjs_text_muted"
+                        android:textCursorDrawable="@null"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="@string/quickjs_output_label"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:textColor="@color/qjs_text_secondary"
+            android:textStyle="bold" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/qjs_surface"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/qjs_outline"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quickjs_result_label"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    android:textColor="@color/qjs_blue"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/resultView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_qjs_output"
+                    android:fontFamily="monospace"
+                    android:minHeight="72dp"
+                    android:padding="12dp"
+                    android:textColor="@color/qjs_text_primary"
+                    android:textIsSelectable="true"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="@string/quickjs_result_label"
-            android:textStyle="bold" />
+            app:cardBackgroundColor="@color/qjs_surface"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/qjs_outline"
+            app:strokeWidth="1dp">
 
-        <TextView
-            android:id="@+id/resultView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:textIsSelectable="true" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="14dp">
 
-        <TextView
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quickjs_console_label"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    android:textColor="@color/qjs_primary"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/consoleView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_qjs_output"
+                    android:fontFamily="monospace"
+                    android:minHeight="72dp"
+                    android:padding="12dp"
+                    android:textColor="@color/qjs_text_primary"
+                    android:textIsSelectable="true"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="@string/quickjs_console_label"
-            android:textStyle="bold" />
+            app:cardBackgroundColor="@color/qjs_surface"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/qjs_outline"
+            app:strokeWidth="1dp">
 
-        <TextView
-            android:id="@+id/consoleView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:textIsSelectable="true" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="14dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="@string/quickjs_metrics_label"
-            android:textStyle="bold" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quickjs_metrics_label"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    android:textColor="@color/qjs_warning"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/metricsView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:textIsSelectable="true" />
+                <TextView
+                    android:id="@+id/metricsView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_qjs_output"
+                    android:fontFamily="monospace"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:textColor="@color/qjs_text_primary"
+                    android:textIsSelectable="true"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </ScrollView>

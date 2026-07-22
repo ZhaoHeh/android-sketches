@@ -41,9 +41,11 @@ class QuickJsPlaygroundActivity : AppCompatActivity() {
         val cases = QuickJsValidationCases.all
         caseSpinner.adapter = ArrayAdapter(
             this,
-            android.R.layout.simple_spinner_dropdown_item,
+            R.layout.item_qjs_spinner,
             cases.map(QuickJsValidationCase::title)
-        )
+        ).also {
+            it.setDropDownViewResource(R.layout.item_qjs_spinner_dropdown)
+        }
         caseSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if (savedInstanceState == null || sourceEditor.text.isEmpty()) loadCase(cases[position])

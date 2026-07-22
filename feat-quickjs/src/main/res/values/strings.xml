@@ -2,6 +2,8 @@
     <string name="quickjs_title">QuickJS Playground</string>
     <string name="quickjs_summary">验证脚本执行、资源限制、Promise 与 Android 异步桥接</string>
     <string name="quickjs_case_label">验证用例</string>
+    <string name="quickjs_limits_label">安全限制</string>
+    <string name="quickjs_output_label">输出</string>
     <string name="quickjs_source_label">JavaScript</string>
     <string name="quickjs_timeout_hint">超时 (ms)</string>
     <string name="quickjs_memory_hint">内存 (MiB)</string>
