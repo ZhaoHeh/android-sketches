@@ -18,10 +18,6 @@
     <color name="color_text_primary">#111827</color>
     <color name="color_text_secondary">#4B5563</color>
     <color name="color_text_muted">#6B7280</color>
-    <color name="color_pill_surface">#EDF2F7</color>
-    <color name="color_pill_outline">#D2DAE5</color>
-    <color name="color_entry_badge_surface">#E4F2EE</color>
-    <color name="color_entry_badge_outline">#B4D8CF</color>
     <color name="color_ripple">#DDEAE7</color>
     <color name="ic_launcher_background">#E4F2EE</color>
 </resources>

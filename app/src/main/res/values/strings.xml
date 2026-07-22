@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Sketch</string>
-    <string name="sketch_home_title">Sketch 实验场</string>
-    <string name="sketch_home_summary">一个面向 Android 能力验证的轻量实验台。每个入口都是独立模块，适合快速打开、观察和迭代。</string>
+    <string name="sketch_home_title">Android Sketch</string>
     <string name="sketch_home_eyebrow">ANDROID LAB CONSOLE</string>
-    <string name="sketch_home_auto_discovery">Manifest 自动发现</string>
-    <string name="sketch_home_count">%1$d 个实验入口</string>
     <string name="sketch_home_section">实验索引</string>
     <string name="sketch_home_empty">暂时还没有可用的 sketch 入口。添加功能库模块并暴露入口 Activity 后，它就会显示在这里。</string>
-    <string name="sketch_entry_summary_fallback">来自模块：%1$s</string>
 </resources>
