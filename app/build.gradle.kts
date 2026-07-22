@@ -42,6 +42,7 @@ dependencies {
     implementation(project(":feat-showcase"))
     implementation(project(":feat-camerax-aruco"))
     implementation(project(":feat-arcore"))
+    implementation(project(":feat-quickjs"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

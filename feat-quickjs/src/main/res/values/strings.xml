@@ -1,0 +1,29 @@
+<resources>
+    <string name="quickjs_title">QuickJS Playground</string>
+    <string name="quickjs_summary">验证脚本执行、资源限制、Promise 与 Android 异步桥接</string>
+    <string name="quickjs_case_label">验证用例</string>
+    <string name="quickjs_source_label">JavaScript</string>
+    <string name="quickjs_timeout_hint">超时 (ms)</string>
+    <string name="quickjs_memory_hint">内存 (MiB)</string>
+    <string name="quickjs_stack_hint">栈 (KiB)</string>
+    <string name="quickjs_reset">恢复默认</string>
+    <string name="quickjs_run">运行</string>
+    <string name="quickjs_stop">停止</string>
+    <string name="quickjs_run_all">运行全部</string>
+    <string name="quickjs_status_idle">尚未运行</string>
+    <string name="quickjs_status_running">运行中…</string>
+    <string name="quickjs_status_stopping">正在停止…</string>
+    <string name="quickjs_status_busy">已有脚本正在运行</string>
+    <string name="quickjs_status_batch_stopped">批量验证已停止</string>
+    <string name="quickjs_status_unsupported_abi">当前设备 ABI 不受支持；QuickJS 第一版仅构建 arm64-v8a</string>
+    <string name="quickjs_status_batch_complete">批量验证完成：%1$d/%2$d 通过</string>
+    <string name="quickjs_status_batch_progress">批量验证 %1$d/%2$d：%3$s</string>
+    <string name="quickjs_status_success">执行成功 (%1$s)</string>
+    <string name="quickjs_status_failure">执行失败：%1$s</string>
+    <string name="quickjs_no_logs">(无日志)</string>
+    <string name="quickjs_metrics">%1$d ms · %2$s</string>
+    <string name="quickjs_invalid_options">请填写有效的安全参数</string>
+    <string name="quickjs_result_label">结果</string>
+    <string name="quickjs_console_label">Console</string>
+    <string name="quickjs_metrics_label">执行指标</string>
+</resources>

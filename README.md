@@ -7,6 +7,7 @@
 - `feat-showcase`：最小示例模块，用来验证模块发现链路
 - `feat-camerax-aruco`：CameraX 预览 + OpenCV arUco 检测示例
 - `feat-arcore`：ARCore 可用性检查与客厅墙面挂画预研入口
+- `feat-quickjs`：QuickJS-NG Playground、资源限制与异步宿主桥接验证
 
 ## 工程结构
 
@@ -15,6 +16,7 @@
 - `feat-showcase`：示例实验页
 - `feat-camerax-aruco`：相机预览与 arUco 检测实验页
 - `feat-arcore`：Android ARCore 接入与墙面挂画预研实验页
+- `feat-quickjs`：Android JNI 嵌入 QuickJS-NG 的执行与安全验证页
 
 ## 实验页接入机制
 
@@ -46,6 +48,21 @@ Gradle 运行 JDK 请使用 Azul Zulu JDK 11 LTS。Windows 和 macOS 的下载�
 4. 添加统一的 sketch action 和 metadata
 5. 让页面可直接独立打开，不依赖首页传参
 6. 补充该模块自己的 `README.md` 和 `AGENT.md`
+
+## QuickJS 源码
+
+`feat-quickjs` 默认从 Git submodule `third_party/quickjs` 构建。首次克隆后执行：
+
+```bash
+git submodule update --init --recursive
+```
+
+开发 QuickJS 本身时，可以不改仓库配置，直接覆盖源码目录：
+
+```bash
+./gradlew :feat-quickjs:assembleDebug \
+  -PquickjsSourceDir=/absolute/path/to/quickjs
+```
 
 ## 当前已知约定
 

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application android:supportsRtl="true">
+        <activity
+            android:name=".QuickJsPlaygroundActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="dev.hehe.sketch.action.SKETCH_ENTRY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="dev.hehe.sketch.entry.TITLE"
+                android:value="@string/quickjs_title" />
+            <meta-data
+                android:name="dev.hehe.sketch.entry.SUMMARY"
+                android:value="@string/quickjs_summary" />
+            <meta-data
+                android:name="dev.hehe.sketch.entry.ORDER"
+                android:value="40" />
+            <meta-data
+                android:name="dev.hehe.sketch.entry.MODULE"
+                android:value="feat-quickjs" />
+        </activity>
+    </application>
+
+</manifest>
