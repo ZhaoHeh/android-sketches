@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="arcore_entry_accent">#73D08A</color>
     <color name="arcore_panel_surface">#171C24</color>
     <color name="arcore_crosshair">#F9F6EF</color>
     <color name="arcore_art_sticker_background">#242A32</color>

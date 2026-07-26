@@ -6,5 +6,7 @@ data class SketchEntry(
     val activityPackageName: String,
     val summary: String?,
     val order: Int,
-    val moduleName: String
+    val moduleName: String,
+    val tags: List<String>,
+    val accentColorRes: Int?
 )

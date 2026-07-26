@@ -43,6 +43,12 @@
             <meta-data
                 android:name="dev.hehe.sketch.entry.MODULE"
                 android:value="feat-camerax-aruco" />
+            <meta-data
+                android:name="dev.hehe.sketch.entry.TAGS"
+                android:value="camera,opencv" />
+            <meta-data
+                android:name="dev.hehe.sketch.entry.ACCENT_COLOR"
+                android:resource="@color/camera_aruco_entry_accent" />
         </activity>
     </application>
 

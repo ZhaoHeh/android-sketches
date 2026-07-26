@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="camera_aruco_entry_accent">#1E5AAE</color>
     <color name="camera_preview_scrim">#000000</color>
     <color name="camera_panel_surface">#F2FFFFFF</color>
     <color name="camera_status_surface">#E6FFFFFF</color>

@@ -23,6 +23,12 @@
             <meta-data
                 android:name="dev.hehe.sketch.entry.MODULE"
                 android:value="feat-showcase" />
+            <meta-data
+                android:name="dev.hehe.sketch.entry.TAGS"
+                android:value="android,manifest" />
+            <meta-data
+                android:name="dev.hehe.sketch.entry.ACCENT_COLOR"
+                android:resource="@color/showcase_entry_accent" />
         </activity>
     </application>
 

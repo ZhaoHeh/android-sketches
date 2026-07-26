@@ -19,5 +19,10 @@
     <color name="color_text_secondary">#4B5563</color>
     <color name="color_text_muted">#6B7280</color>
     <color name="color_ripple">#DDEAE7</color>
+    <color name="color_entry_fallback_teal">#007F67</color>
+    <color name="color_entry_fallback_blue">#1E5AAE</color>
+    <color name="color_entry_fallback_green">#2E7D4F</color>
+    <color name="color_entry_fallback_amber">#946200</color>
+    <color name="color_entry_fallback_rose">#B43C5A</color>
     <color name="ic_launcher_background">#E4F2EE</color>
 </resources>

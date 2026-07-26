@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="quickjs_entry_accent">#946200</color>
     <color name="qjs_background">#F6F8FB</color>
     <color name="qjs_surface">#FFFFFF</color>
     <color name="qjs_surface_alt">#EEF3F8</color>

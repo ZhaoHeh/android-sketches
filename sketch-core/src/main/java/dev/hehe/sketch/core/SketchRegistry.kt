@@ -11,6 +11,8 @@ object SketchRegistry {
     const val META_SUMMARY = "dev.hehe.sketch.entry.SUMMARY"
     const val META_ORDER = "dev.hehe.sketch.entry.ORDER"
     const val META_MODULE = "dev.hehe.sketch.entry.MODULE"
+    const val META_TAGS = "dev.hehe.sketch.entry.TAGS"
+    const val META_ACCENT_COLOR = "dev.hehe.sketch.entry.ACCENT_COLOR"
 
     fun discover(context: Context): List<SketchEntry> {
         val intent = Intent(ACTION_SKETCH_ENTRY)
@@ -32,7 +34,10 @@ object SketchRegistry {
                     summary = metadata?.getString(META_SUMMARY)?.takeIf { it.isNotBlank() },
                     order = metadata?.getInt(META_ORDER, Int.MAX_VALUE) ?: Int.MAX_VALUE,
                     moduleName = metadata?.getString(META_MODULE)?.takeIf { it.isNotBlank() }
-                        ?: activityInfo.packageName
+                        ?: activityInfo.packageName,
+                    tags = parseTags(metadata?.getString(META_TAGS)),
+                    accentColorRes = metadata?.getInt(META_ACCENT_COLOR)
+                        ?.takeIf { it != 0 }
                 )
             }
             .sortedWith(compareBy<SketchEntry> { it.order }.thenBy { it.title.lowercase() })
@@ -42,6 +47,13 @@ object SketchRegistry {
         val intent = Intent().setClassName(entry.activityPackageName, entry.activityClassName)
         context.startActivity(intent)
     }
+
+    private fun parseTags(rawTags: String?): List<String> = rawTags
+        ?.split(',')
+        ?.map { it.trim().lowercase() }
+        ?.filter { it.isNotEmpty() }
+        ?.distinct()
+        .orEmpty()
 
     @Suppress("DEPRECATION")
     private fun queryEntries(

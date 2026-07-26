@@ -15,20 +15,47 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/entryTitle"
+        <View
+            android:id="@+id/entryAccent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|start"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:textColor="@color/color_text_primary"
-            android:textStyle="bold"
-            tools:text="QuickJS Playground" />
+            android:layout_height="4dp"
+            android:layout_gravity="top"
+            android:background="@drawable/bg_entry_accent_rail" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="4dp"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="14dp">
+
+            <TextView
+                android:id="@+id/entryTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="@color/color_text_primary"
+                android:textStyle="bold"
+                tools:text="QuickJS Playground" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/entryTags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:visibility="gone"
+                app:chipSpacingHorizontal="6dp"
+                app:singleLine="true"
+                tools:visibility="visible" />
+
+        </FrameLayout>
 
     </FrameLayout>
 
