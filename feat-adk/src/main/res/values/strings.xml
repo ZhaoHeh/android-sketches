@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="adk_title">ADK Mobile Agent</string>
+    <string name="adk_summary">通用 ADK Agent，通过本地 MCP 能力目录调用 QuickJS 与 Android 系统能力</string>
+    <string name="adk_configuration_toggle">Gemini 配置（展开 / 收起）</string>
+    <string name="adk_api_key_hint">Google AI API key</string>
+    <string name="adk_api_key_warning">key 仅保存在当前进程内存，不写入日志或持久化。</string>
+    <string name="adk_model_hint">模型名称</string>
+    <string name="adk_tools_label">MCP 工具目录</string>
+    <string name="adk_pending_label">待审批工具调用（逐项处理）</string>
+    <string name="adk_risk_confirmation">外部副作用 · 每次确认</string>
+    <string name="adk_risk_read_only">只读计算 · 自动执行</string>
+    <string name="adk_available">运行可用</string>
+    <string name="adk_allow">允许</string>
+    <string name="adk_reject">拒绝</string>
+    <string name="adk_prompt_label">消息</string>
+    <string name="adk_prompt_hint">描述任务，Agent 会自主选择已启用工具</string>
+    <string name="adk_streaming">使用 ADK SSE 流式响应</string>
+    <string name="adk_new_session">新会话</string>
+    <string name="adk_stop">停止</string>
+    <string name="adk_run">发送</string>
+    <string name="adk_transcript_label">多轮对话</string>
+    <string name="adk_trace_label">ADK / MCP 事件轨迹</string>
+    <string name="adk_transcript_intro">选择示例或输入任务。QuickJS 自动运行；日历和计时器会先暂停，并等待你逐项确认。</string>
+    <string name="adk_status_idle">等待配置</string>
+    <string name="adk_status_running">Agent 运行中</string>
+    <string name="adk_status_complete">本轮完成</string>
+    <string name="adk_status_approval_required">等待工具审批</string>
+    <string name="adk_status_stopped">已停止</string>
+    <string name="adk_status_failed">失败：%1$s</string>
+    <string name="adk_api_key_required">请输入 API key</string>
+    <string name="adk_model_required">请输入模型名称</string>
+    <string name="adk_prompt_required">请输入消息</string>
+    <string name="adk_trace_new_session">SESSION  已切换到本地会话 #%1$d</string>
+    <string name="adk_example_quickjs_short">JS 统计</string>
+    <string name="adk_example_calendar_short">添加日程</string>
+    <string name="adk_example_timer_short">90 秒计时</string>
+    <string name="adk_example_quickjs">用 JavaScript 计算一组订单 [12.5, 8, 21.5, 5] 的总额、平均值和最大值。</string>
+    <string name="adk_example_calendar">明天下午三点添加一个 30 分钟的项目同步日程。</string>
+    <string name="adk_example_timer">设置一个 90 秒的计时器，标签是专注休息。</string>
+</resources>

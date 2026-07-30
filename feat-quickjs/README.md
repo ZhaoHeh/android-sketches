@@ -52,7 +52,8 @@ Promise；未被等待的宿主任务会在本次运行结束时取消。
 
 ## 构建
 
-使用 JDK 11、Android NDK `26.1.10909125` 和 CMake `3.22.1`：
+Gradle 使用 JDK 11 运行（字节码 target 11），并安装 Android NDK
+`26.1.10909125` 和 CMake `3.22.1`：
 
 ```bash
 ./gradlew :feat-quickjs:assembleDebug :app:assembleDebug

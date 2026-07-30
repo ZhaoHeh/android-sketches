@@ -8,6 +8,7 @@
 - `feat-camerax-aruco`：CameraX 预览 + OpenCV arUco 检测示例
 - `feat-arcore`：ARCore 可用性检查与客厅墙面挂画预研入口
 - `feat-quickjs`：QuickJS-NG Playground、资源限制与异步宿主桥接验证
+- `feat-adk`：Google ADK Kotlin 的 Agent、会话、流式事件与本地工具调用验证
 
 ## 工程结构
 
@@ -17,6 +18,7 @@
 - `feat-camerax-aruco`：相机预览与 arUco 检测实验页
 - `feat-arcore`：Android ARCore 接入与墙面挂画预研实验页
 - `feat-quickjs`：Android JNI 嵌入 QuickJS-NG 的执行与安全验证页
+- `feat-adk`：Android 端运行 Google ADK Kotlin 的可观察 Agent Playground
 
 ## 实验页接入机制
 
@@ -33,12 +35,15 @@
 ## 构建信息
 
 - AGP：`7.4.2`
-- Kotlin：`1.8.22`
+- Kotlin：`2.1.20`
+- Gradle：`7.6.3`
 - compileSdk：`34`
-- minSdk：`24`
+- minSdk：`26`
 - Java target：`11`
 
-Gradle 运行 JDK 请使用 Azul Zulu JDK 11 LTS。Windows 和 macOS 的下载、安装以及 Android Studio Gradle JDK 配置方式见 [SETUP_SUMMARY.md](./SETUP_SUMMARY.md) 的 “Gradle 运行 JDK” 小节。
+Gradle 继续使用 JDK 11；Java/Kotlin 字节码 target 也保持 11。Windows 和 macOS 的安装
+以及 Android Studio Gradle JDK 配置方式见
+[SETUP_SUMMARY.md](./SETUP_SUMMARY.md) 的 “Gradle 运行 JDK” 小节。
 
 ## 新增实验模块的建议流程
 

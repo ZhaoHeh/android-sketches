@@ -7,23 +7,26 @@
 *   **应用名称**: Android Sketches
 *   **包名**: `dev.hehe.sketch`
 *   **Compile SDK**: 34
-*   **Min SDK**: 24
+*   **Min SDK**: 26
 *   **Target SDK**: 34
 
-## 2. 环境配置 (Java 11 兼容性)
+## 2. 环境配置
 
-为了在 **Java 11** 环境下成功构建项目，我们对工具链进行了如下配置：
+ADK Kotlin 0.6.0 的发布物使用 Kotlin 2.1 兼容元数据，Android target 的
+`minSdk` 是 26。项目仅升级 Kotlin 编译器和 Gradle 的必要小版本，保留原有 AGP 与
+JDK 11：
 
-*   **Java 版本**: Java 11 (推荐使用 Azul Zulu JDK 11 LTS)
-*   **Gradle 版本**: 7.6.1 (降级自 8.2 以适配 Java 11)
-*   **Android Gradle Plugin (AGP)**: 7.4.2 (降级自 8.2.0 以适配 Java 11)
-*   **Kotlin 版本**: 1.8.10
+*   **Gradle 运行 Java**: JDK 11
+*   **Java/Kotlin target**: 11
+*   **Gradle 版本**: 7.6.3
+*   **Android Gradle Plugin (AGP)**: 7.4.2
+*   **Kotlin 版本**: 2.1.20
 
 ### Gradle 运行 JDK
 
-本项目的 Java target 是 11，Gradle 也应使用 **JDK 11** 运行。推荐安装 Azul Zulu JDK 11 LTS：
+项目继续使用 **JDK 11** 运行 Gradle，推荐安装 Azul Zulu JDK 11 LTS：
 
-https://www.azul.com/downloads/?version=java-11-lts&os=macos&architecture=arm-64-bit&package=jdk#zulu
+https://www.azul.com/downloads/?version=java-11-lts&package=jdk#zulu
 
 下载页面中请保持：
 
@@ -55,7 +58,7 @@ https://www.azul.com/downloads/?version=java-11-lts&os=macos&architecture=arm-64
     java -version
     $env:JAVA_HOME
     ```
-    `java -version` 应显示 `11.x` 和 `Zulu`。
+    `java -version` 应显示 `11.x`。
 5.  如需只让当前终端临时使用该 JDK：
     ```powershell
     $env:JAVA_HOME="C:\Program Files\Zulu\zulu-11"
@@ -72,7 +75,7 @@ https://www.azul.com/downloads/?version=java-11-lts&os=macos&architecture=arm-64
     ```text
     /Library/Java/JavaVirtualMachines/
     ```
-3.  查看已安装的 JDK 11：
+3.  查看已安装的 JDK：
     ```bash
     /usr/libexec/java_home -V
     ```
@@ -100,32 +103,32 @@ https://www.azul.com/downloads/?version=java-11-lts&os=macos&architecture=arm-64
     java -version
     echo "$JAVA_HOME"
     ```
-    `java -version` 应显示 `11.x` 和 `Zulu`。
+    `java -version` 应显示 `11.x`。
 
 #### Android Studio 中配置 Gradle JDK
 
-如果使用 Android Studio，同步项目时还需要让 IDE 的 Gradle 运行环境指向 Zulu JDK 11：
+如果使用 Android Studio，让 IDE 的 Gradle 运行环境继续指向本机 JDK 11：
 
 1.  打开 Android Studio。
 2.  进入 **File > Settings** (Windows/Linux) 或 **Android Studio > Preferences** (macOS)。
 3.  打开 **Build, Execution, Deployment > Build Tools > Gradle**。
 4.  在 **Gradle JDK** 中选择已安装的 **Zulu JDK 11**。
 5.  如果列表中没有：
-    *   Windows: 点击 `Add JDK...`，选择 Zulu JDK 11 安装目录，例如 `C:\Program Files\Zulu\zulu-11`。
-    *   macOS: 点击 `Add JDK...`，选择 `/Library/Java/JavaVirtualMachines/` 下的 Zulu JDK 11。
+    *   Windows: 点击 `Add JDK...`，选择 JDK 11 安装目录，例如 `C:\Program Files\Zulu\zulu-11`。
+    *   macOS: 点击 `Add JDK...`，选择 `/Library/Java/JavaVirtualMachines/` 下的 JDK 11。
 6.  点击 **Apply** / **OK**，然后重新 **Sync Project with Gradle Files**。
 
 不要把个人机器上的绝对路径写进仓库的 `gradle.properties`。如果确实需要临时固定 Gradle JDK，可以只在本机未提交的配置里使用：
 
 ```properties
-org.gradle.java.home=/path/to/zulu-11
+org.gradle.java.home=/path/to/jdk-11
 ```
 
 ## 3. 关键配置文件
 
 ### `gradle.properties`
 
-*   **Java Home**: 设置为 Java 11 的路径。
+*   **Java Home**: 不提交机器相关路径，在 IDE 或 `JAVA_HOME` 中配置 JDK 11。
     ```properties
     # Do not commit org.gradle.java.home with a machine-specific path.
     # Configure JDK 11 locally in Android Studio or via JAVA_HOME.
@@ -146,7 +149,7 @@ org.gradle.java.home=/path/to/zulu-11
 
 *   **Distribution URL**:
     ```properties
-    distributionUrl=https\://services.gradle.org/distributions/gradle-7.6.1-bin.zip
+    distributionUrl=https\://services.gradle.org/distributions/gradle-7.6.3-bin.zip
     ```
 
 ### `gradle/libs.versions.toml`
@@ -155,13 +158,14 @@ org.gradle.java.home=/path/to/zulu-11
     ```toml
     [versions]
     agp = "7.4.2"
-    kotlin = "1.8.10"
+    kotlin = "2.1.20"
+    adk = "0.6.0"
     ```
 
 ## 4. 问题解决与变通
 
-### Lint 兼容性问题
-由于部分 AndroidX 库的 Lint 检查工具使用 Java 17 编译，导致在 Java 11 环境下运行时崩溃。
+### Lint 配置
+实验聚合工程不让 release Lint 阻断本地验证：
 
 **解决方案**: 在 `app/build.gradle.kts` 中禁用了 Release 构建的 Lint 检查，并允许构建在错误时继续运行。
 
@@ -175,8 +179,16 @@ android {
 }
 ```
 
-### 语法修正
-*   将 `minifyEnabled` 修正为 `isMinifyEnabled` 以适应 Kotlin DSL 和 AGP 7.4.2。
+### ADK 依赖兼容性
+
+`google-adk-kotlin-core:0.6.0` 使用 Kotlin 2.1 元数据，且 Android 变体的 `minSdk`
+为 26。因此 Kotlin 升级到 2.1.20、Gradle 升级到该版本支持的最低稳定线 7.6.3，
+应用 `minSdk` 升级到 26。Kotlin 2.1.20 官方仍支持 AGP 7.4.2，所以无需迁移到 AGP 8
+或 JDK 17。
+
+ADK 默认传递的 Room 2.8 session backend 要求 AGP 8.1.1；`feat-adk` 使用
+`InMemorySessionService`，因此在模块依赖中排除了未使用的 `room-runtime` 和
+`room-ktx`，避免可选能力污染宿主工程工具链。
 
 ## 5. 构建指南
 
@@ -190,40 +202,9 @@ android {
 
 ## 6. Android Studio 同步问题
 
-当在 Android Studio 中打开此项目并尝试同步时，可能会遇到以下错误：
-
-```
-Your build is currently configured to use incompatible Java 21.0.8 and Gradle 7.6.1. Cannot sync the project.
-
-We recommend upgrading to Gradle version 9.0-milestone-1.
-
-The minimum compatible Gradle version is 8.5.
-
-The maximum compatible Gradle JVM version is 19.
-
-Possible solutions:
- - Upgrade to Gradle 9.0-milestone-1 and re-sync
- - Upgrade to Gradle 8.5 and re-sync
-```
-
-### 问题分析
-
-这个错误是因为项目当前配置的 Gradle 版本 (7.6.1) 与 Android Studio 默认用于运行 Gradle Daemon 的 Java 版本 (Java 21) 不兼容。Gradle 7.6.1 最高只支持到 Java 19。
-
-Android Studio 提示升级 Gradle 的建议是基于它检测到的 Java 21 环境倒推的，而不是考虑项目实际需要的 Java 11 环境。
-
-### 解决方案 (无需修改项目代码)
-
-您需要调整 Android Studio 的设置，使其使用 **Java 11** 来运行 Gradle 守护进程。请按照以下步骤操作：
-
-1.  打开 Android Studio。
-2.  进入 **File > Settings** (Windows/Linux) 或 **Android Studio > Preferences** (macOS)。
-3.  导航到 **Build, Execution, Deployment > Build Tools > Gradle**。
-4.  在 **Gradle JDK** 选项中，选择您系统上安装的 **Zulu JDK 11**。如果列表中没有，可以点击 `Add JDK...` 并选择本机 Zulu JDK 11 安装目录。
-5.  点击 **Apply** 和 **OK**。
-6.  重新点击 **Sync Project with Gradle Files**（通常是工具栏上的大象图标）。
-
-通过将 Android Studio 的 Gradle JDK 设置为 Java 11，您将解决此同步问题，并且可以正常在 IDE 中操作项目。
+如果同步提示 Gradle JVM 不兼容，请在
+**Build, Execution, Deployment > Build Tools > Gradle > Gradle JDK** 选择本机
+JDK 11（当前项目配置名为 `zulu-11`），然后重新执行 **Sync Project with Gradle Files**。
 
 ## 7. 调试与分析文件
 

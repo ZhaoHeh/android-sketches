@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="adk_entry_accent">#D0BCFF</color>
+    <color name="adk_background">#111015</color>
+    <color name="adk_surface">#1C1B20</color>
+    <color name="adk_output">#211F26</color>
+    <color name="adk_trace_surface">#09080C</color>
+    <color name="adk_outline">#49454F</color>
+    <color name="adk_primary">#D0BCFF</color>
+    <color name="adk_on_primary">#381E72</color>
+    <color name="adk_warning">#FFB95F</color>
+    <color name="adk_text_primary">#E6E1E5</color>
+    <color name="adk_text_secondary">#CAC4D0</color>
+    <color name="adk_text_muted">#938F99</color>
+    <color name="adk_trace_text">#E8DEF8</color>
+    <color name="adk_status_surface">#332D41</color>
+    <color name="adk_status_outline">#675A82</color>
+</resources>

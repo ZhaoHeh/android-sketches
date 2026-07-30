@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "dev.hehe.sketch"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -34,6 +34,14 @@ android {
         checkReleaseBuilds = false
         abortOnError = false
     }
+    packagingOptions {
+        resources {
+            merges += setOf(
+                "META-INF/INDEX.LIST",
+                "META-INF/DEPENDENCIES"
+            )
+        }
+    }
 }
 
 dependencies {
@@ -43,6 +51,7 @@ dependencies {
     implementation(project(":feat-camerax-aruco"))
     implementation(project(":feat-arcore"))
     implementation(project(":feat-quickjs"))
+    implementation(project(":feat-adk"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
