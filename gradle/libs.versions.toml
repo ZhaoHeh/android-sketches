@@ -1,7 +1,9 @@
 [versions]
 agp = "7.4.2"
-kotlin = "2.1.20"
+kotlin = "2.2.21"
 adk = "0.6.0"
+litertlm = "0.14.0"
+gson = "2.13.2"
 kotlinxCoroutines = "1.11.0"
 coreKtx = "1.12.0"
 junit = "4.13.2"
@@ -35,6 +37,8 @@ androidx-tracing-ktx = { group = "androidx.tracing", name = "tracing-ktx", versi
 google-arcore = { group = "com.google.ar", name = "core", version.ref = "arcore" }
 sceneform-ux = { group = "com.gorisse.thomas.sceneform", name = "ux", version.ref = "sceneform" }
 google-adk-kotlin-core = { group = "com.google.adk", name = "google-adk-kotlin-core", version.ref = "adk" }
+google-litertlm-android = { group = "com.google.ai.edge.litertlm", name = "litertlm-android", version.ref = "litertlm" }
+google-gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 
 [plugins]

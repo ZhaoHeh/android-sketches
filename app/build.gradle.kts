@@ -52,6 +52,7 @@ dependencies {
     implementation(project(":feat-arcore"))
     implementation(project(":feat-quickjs"))
     implementation(project(":feat-adk"))
+    implementation(project(":feat-gemma"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

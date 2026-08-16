@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application android:supportsRtl="true">
+        <uses-native-library
+            android:name="libvndksupport.so"
+            android:required="false" />
+        <uses-native-library
+            android:name="libOpenCL.so"
+            android:required="false" />
+
+        <activity
+            android:name=".GemmaPlaygroundActivity"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="dev.hehe.sketch.action.SKETCH_ENTRY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="dev.hehe.sketch.entry.TITLE"
+                android:value="@string/gemma_title" />
+            <meta-data
+                android:name="dev.hehe.sketch.entry.SUMMARY"
+                android:value="@string/gemma_summary" />
+            <meta-data
+                android:name="dev.hehe.sketch.entry.ORDER"
+                android:value="60" />
+            <meta-data
+                android:name="dev.hehe.sketch.entry.MODULE"
+                android:value="feat-gemma" />
+            <meta-data
+                android:name="dev.hehe.sketch.entry.TAGS"
+                android:value="ai,gemma,on-device,litert-lm" />
+            <meta-data
+                android:name="dev.hehe.sketch.entry.ACCENT_COLOR"
+                android:resource="@color/gemma_entry_accent" />
+        </activity>
+    </application>
+
+</manifest>

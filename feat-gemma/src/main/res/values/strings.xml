@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gemma_title">Gemma 4 On-device</string>
+    <string name="gemma_summary">下载 Gemma 4 E2B 到本机，通过 LiteRT-LM 完全离线对话</string>
+    <string name="gemma_status_not_downloaded">模型尚未下载</string>
+    <string name="gemma_status_ready">模型已下载，等待加载</string>
+    <string name="gemma_status_downloading">正在下载模型</string>
+    <string name="gemma_status_verifying">正在校验 SHA-256</string>
+    <string name="gemma_status_loading">正在加载模型，首次可能需要约 10 秒</string>
+    <string name="gemma_status_loaded">模型已加载 · %1$s</string>
+    <string name="gemma_status_generating">正在本机生成</string>
+    <string name="gemma_status_stopped">已停止</string>
+    <string name="gemma_status_failed">失败：%1$s</string>
+    <string name="gemma_model_label">模型</string>
+    <string name="gemma_model_name">Gemma 4 E2B IT · 2.41 GiB · GPU/CPU</string>
+    <string name="gemma_model_source">来源：litert-community/gemma-4-E2B-it-litert-lm</string>
+    <string name="gemma_download">下载模型</string>
+    <string name="gemma_resume_download">继续下载</string>
+    <string name="gemma_cancel_download">取消下载</string>
+    <string name="gemma_delete">删除模型</string>
+    <string name="gemma_delete_confirmation_title">删除本地模型？</string>
+    <string name="gemma_delete_confirmation_message">将删除本应用下载的 2.41 GiB 模型文件。再次使用时需要重新下载。</string>
+    <string name="gemma_cancel">取消</string>
+    <string name="gemma_load">加载模型</string>
+    <string name="gemma_unload">卸载模型</string>
+    <string name="gemma_progress">%1$s / %2$s · %3$d%%</string>
+    <string name="gemma_progress_empty">下载后可完全离线使用</string>
+    <string name="gemma_chat_label">离线对话</string>
+    <string name="gemma_prompt_hint">输入消息</string>
+    <string name="gemma_send">发送</string>
+    <string name="gemma_stop">停止</string>
+    <string name="gemma_new_conversation">新对话</string>
+    <string name="gemma_transcript_empty">加载模型后即可开始对话。</string>
+    <string name="gemma_metrics_empty">运行指标将在这里显示</string>
+    <string name="gemma_metrics">初始化 %1$.2fs · 首 token %2$.2fs · Prefill %3$.1f tok/s · Decode %4$.1f tok/s</string>
+    <string name="gemma_gpu_fallback">GPU 初始化失败，已回退 CPU：%1$s</string>
+    <string name="gemma_model_deleted">模型已删除</string>
+    <string name="gemma_prompt_required">请输入消息</string>
+</resources>

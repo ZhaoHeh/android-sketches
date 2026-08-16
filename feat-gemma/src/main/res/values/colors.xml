@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="gemma_entry_accent">#006C4C</color>
+    <color name="gemma_background">#F6F8F5</color>
+    <color name="gemma_surface">#FFFFFF</color>
+    <color name="gemma_outline">#C7D0C9</color>
+    <color name="gemma_primary">#006C4C</color>
+    <color name="gemma_on_primary">#FFFFFF</color>
+    <color name="gemma_text_primary">#191C1A</color>
+    <color name="gemma_text_secondary">#414945</color>
+    <color name="gemma_status_surface">#DDF5E8</color>
+    <color name="gemma_status_outline">#9CCBB6</color>
+    <color name="gemma_output_surface">#EEF3EF</color>
+    <color name="gemma_danger">#BA1A1A</color>
+</resources>
