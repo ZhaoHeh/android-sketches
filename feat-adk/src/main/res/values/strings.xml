@@ -2,7 +2,10 @@
 <resources>
     <string name="adk_title">ADK Mobile Agent</string>
     <string name="adk_summary">通用 ADK Agent，通过本地 MCP 能力目录调用 QuickJS 与 Android 系统能力</string>
-    <string name="adk_configuration_toggle">Gemini 配置（展开 / 收起）</string>
+    <string name="adk_configuration_toggle">模型配置（展开 / 收起）</string>
+    <string name="adk_use_local_gemma">使用本地 Gemma 4 E2B</string>
+    <string name="adk_local_model_ready">模型已下载，将通过 LiteRT-LM 完全离线运行。</string>
+    <string name="adk_local_model_missing">模型尚未下载，请先进入 feat-gemma 下载。</string>
     <string name="adk_api_key_hint">Google AI API key</string>
     <string name="adk_api_key_warning">key 仅保存在当前进程内存，不写入日志或持久化。</string>
     <string name="adk_model_hint">模型名称</string>
@@ -30,6 +33,7 @@
     <string name="adk_status_failed">失败：%1$s</string>
     <string name="adk_api_key_required">请输入 API key</string>
     <string name="adk_model_required">请输入模型名称</string>
+    <string name="adk_local_model_required">请先在 feat-gemma 下载 Gemma 4 E2B 模型</string>
     <string name="adk_prompt_required">请输入消息</string>
     <string name="adk_trace_new_session">SESSION  已切换到本地会话 #%1$d</string>
     <string name="adk_example_quickjs_short">JS 统计</string>

@@ -8,20 +8,29 @@ import com.google.adk.kt.agents.RunConfig
 import com.google.adk.kt.agents.StreamingMode
 import com.google.adk.kt.events.Event
 import com.google.adk.kt.models.Gemini
+import com.google.adk.kt.models.Model
 import com.google.adk.kt.runners.InMemoryRunner
 import com.google.adk.kt.sessions.InMemorySessionService
 import com.google.adk.kt.types.Content
 import com.google.adk.kt.types.FunctionResponse
 import com.google.adk.kt.types.Part
 import com.google.adk.kt.types.Role
+import dev.hehe.sketch.feat.gemma.GemmaModelStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
+internal sealed interface AdkModelConfig {
+    data class Cloud(val apiKey: String, val modelName: String) : AdkModelConfig
+    data object LocalGemma : AdkModelConfig
+}
+
 internal class AdkPlaygroundSession(context: Context) : AutoCloseable {
+    private val appContext = context.applicationContext
     private val sessionService = InMemorySessionService()
+    private val gemmaStore = GemmaModelStore(appContext)
     private val registry = AgentCapabilityRegistry(
         listOf(
             QuickJsMcpEndpoint(context.applicationContext),
@@ -29,25 +38,17 @@ internal class AdkPlaygroundSession(context: Context) : AutoCloseable {
         )
     )
     private val mcpToolset = AdkMcpToolset(registry)
-    private var runnerConfig: RunnerConfig? = null
+    private var runnerConfig: AdkModelConfig? = null
     private var runner: InMemoryRunner? = null
+    private var localModel: LiteRtGemmaModel? = null
     private var sessionNumber = 1
 
     fun run(
-        apiKey: String,
-        modelName: String,
+        modelConfig: AdkModelConfig,
         prompt: String,
         streaming: Boolean
     ): Flow<Event> = flow {
-        val config = RunnerConfig(apiKey = apiKey, modelName = modelName)
-        val activeRunner = if (runner == null || runnerConfig != config) {
-            createRunner(config).also {
-                runner = it
-                runnerConfig = config
-            }
-        } else {
-            checkNotNull(runner)
-        }
+        val activeRunner = runnerFor(modelConfig)
 
         emitAll(activeRunner.runAsync(
             userId = USER_ID,
@@ -64,21 +65,12 @@ internal class AdkPlaygroundSession(context: Context) : AutoCloseable {
     }
 
     fun resumeConfirmation(
-        apiKey: String,
-        modelName: String,
+        modelConfig: AdkModelConfig,
         request: PendingToolApproval,
         confirmed: Boolean,
         streaming: Boolean
     ): Flow<Event> = flow {
-        val config = RunnerConfig(apiKey = apiKey, modelName = modelName)
-        val activeRunner = if (runner == null || runnerConfig != config) {
-            createRunner(config).also {
-                runner = it
-                runnerConfig = config
-            }
-        } else {
-            checkNotNull(runner)
-        }
+        val activeRunner = runnerFor(modelConfig)
         emitAll(activeRunner.runAsync(
             userId = USER_ID,
             sessionId = "$SESSION_PREFIX-$sessionNumber",
@@ -107,10 +99,11 @@ internal class AdkPlaygroundSession(context: Context) : AutoCloseable {
 
     suspend fun capabilityCatalog(): List<CapabilityEntry> = registry.catalog()
 
+    fun isLocalModelReady(): Boolean = gemmaStore.isModelReady()
+
     fun setToolEnabled(name: String, enabled: Boolean) {
         registry.setEnabled(name, enabled)
-        runner = null
-        runnerConfig = null
+        clearRunner()
     }
 
     fun startNewSession(): Int {
@@ -120,8 +113,14 @@ internal class AdkPlaygroundSession(context: Context) : AutoCloseable {
     }
 
     fun clearCredentials() {
+        clearRunner()
+    }
+
+    private fun clearRunner() {
         runner = null
         runnerConfig = null
+        localModel?.close()
+        localModel = null
     }
 
     override fun close() {
@@ -129,14 +128,33 @@ internal class AdkPlaygroundSession(context: Context) : AutoCloseable {
         registry.close()
     }
 
-    private suspend fun createRunner(config: RunnerConfig): InMemoryRunner {
+    private suspend fun runnerFor(config: AdkModelConfig): InMemoryRunner {
+        if (runner != null && runnerConfig == config) return checkNotNull(runner)
+        clearRunner()
+        return createRunner(config).also {
+            runner = it
+            runnerConfig = config
+        }
+    }
+
+    private suspend fun createRunner(config: AdkModelConfig): InMemoryRunner {
         // ADK 0.6.0 resolves confirmation resumes from LlmAgent.tools, not toolsets.
         // Materialize this snapshot and rebuild it whenever the capability catalog changes.
         val tools = mcpToolset.getTools()
+        val model: Model = when (config) {
+            is AdkModelConfig.Cloud -> Gemini(name = config.modelName, apiKey = config.apiKey)
+            AdkModelConfig.LocalGemma -> {
+                check(gemmaStore.isModelReady()) { "请先在 feat-gemma 下载 Gemma 4 E2B 模型" }
+                LiteRtGemmaModel(
+                    modelFile = gemmaStore.modelFile,
+                    cacheDir = java.io.File(appContext.cacheDir, "litertlm/adk-gemma-4-e2b")
+                ).also { localModel = it }
+            }
+        }
         val agent = LlmAgent(
             name = AGENT_NAME,
             description = "A general Android agent backed by local MCP-style capabilities.",
-            model = Gemini(name = config.modelName, apiKey = config.apiKey),
+            model = model,
             instruction = Instruction.Provider {
                 val now = ZonedDateTime.now()
                 val catalog = registry.catalog().joinToString("\n") { entry ->
@@ -167,11 +185,6 @@ internal class AdkPlaygroundSession(context: Context) : AutoCloseable {
             sessionService = sessionService
         )
     }
-
-    private data class RunnerConfig(
-        val apiKey: String,
-        val modelName: String
-    )
 
     companion object {
         const val AGENT_NAME = "android_adk_agent"

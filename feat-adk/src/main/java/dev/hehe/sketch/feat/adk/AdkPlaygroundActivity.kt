@@ -38,6 +38,11 @@ class AdkPlaygroundActivity : AppCompatActivity() {
     private lateinit var configToggle: Button
     private lateinit var apiKeyEditor: EditText
     private lateinit var modelEditor: EditText
+    private lateinit var localModelCheck: CheckBox
+    private lateinit var apiKeyLayout: View
+    private lateinit var apiKeyWarning: View
+    private lateinit var modelLayout: View
+    private lateinit var localModelStatus: TextView
     private lateinit var promptEditor: EditText
     private lateinit var streamingCheck: CheckBox
     private lateinit var sendButton: Button
@@ -70,11 +75,16 @@ class AdkPlaygroundActivity : AppCompatActivity() {
         bindViews()
 
         modelEditor.setText(savedInstanceState?.getString(STATE_MODEL) ?: DEFAULT_MODEL)
+        localModelCheck.isChecked = savedInstanceState?.getBoolean(STATE_LOCAL_MODEL) ?: false
         promptEditor.setText(savedInstanceState?.getString(STATE_PROMPT) ?: DEFAULT_PROMPT)
         streamingCheck.isChecked = savedInstanceState?.getBoolean(STATE_STREAMING) ?: true
 
         configToggle.setOnClickListener {
             configBody.visibility = if (configBody.isVisible) View.GONE else View.VISIBLE
+        }
+        localModelCheck.setOnCheckedChangeListener { _, _ ->
+            session.clearCredentials()
+            renderModelConfig()
         }
         sendButton.setOnClickListener { runAgent() }
         stopButton.setOnClickListener { stopRun() }
@@ -89,6 +99,7 @@ class AdkPlaygroundActivity : AppCompatActivity() {
             promptEditor.setText(R.string.adk_example_timer)
         }
         renderIntro()
+        renderModelConfig()
         refreshCapabilityCatalog()
         renderPendingApprovals()
     }
@@ -96,8 +107,14 @@ class AdkPlaygroundActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(STATE_MODEL, modelEditor.text.toString())
+        outState.putBoolean(STATE_LOCAL_MODEL, localModelCheck.isChecked)
         outState.putString(STATE_PROMPT, promptEditor.text.toString())
         outState.putBoolean(STATE_STREAMING, streamingCheck.isChecked)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (::session.isInitialized && ::localModelStatus.isInitialized) renderModelConfig()
     }
 
     override fun onDestroy() {
@@ -120,7 +137,7 @@ class AdkPlaygroundActivity : AppCompatActivity() {
         }
         hideKeyboard()
         appendTranscript("YOU", prompt)
-        collectRun(session.run(config.apiKey, config.model, prompt, streamingCheck.isChecked))
+        collectRun(session.run(config.modelConfig, prompt, streamingCheck.isChecked))
     }
 
     private fun resumeApproval(request: PendingToolApproval, confirmed: Boolean) {
@@ -130,8 +147,7 @@ class AdkPlaygroundActivity : AppCompatActivity() {
         appendTrace("APPROVAL  ${request.toolName} ${if (confirmed) "allowed" else "rejected"}")
         collectRun(
             session.resumeConfirmation(
-                apiKey = config.apiKey,
-                modelName = config.model,
+                modelConfig = config.modelConfig,
                 request = request,
                 confirmed = confirmed,
                 streaming = streamingCheck.isChecked
@@ -285,6 +301,13 @@ class AdkPlaygroundActivity : AppCompatActivity() {
     }
 
     private fun validatedConfig(): AgentConfig? {
+        if (localModelCheck.isChecked) {
+            if (!session.isLocalModelReady()) {
+                localModelStatus.setText(R.string.adk_local_model_required)
+                return null
+            }
+            return AgentConfig(AdkModelConfig.LocalGemma)
+        }
         val apiKey = apiKeyEditor.text.toString().trim()
         val model = modelEditor.text.toString().trim()
         if (apiKey.isBlank()) {
@@ -295,7 +318,27 @@ class AdkPlaygroundActivity : AppCompatActivity() {
             modelEditor.error = getString(R.string.adk_model_required)
             return null
         }
-        return AgentConfig(apiKey, model)
+        return AgentConfig(AdkModelConfig.Cloud(apiKey, model))
+    }
+
+    private fun renderModelConfig() {
+        val local = localModelCheck.isChecked
+        apiKeyLayout.visibility = if (local) View.GONE else View.VISIBLE
+        apiKeyWarning.visibility = if (local) View.GONE else View.VISIBLE
+        modelLayout.visibility = if (local) View.GONE else View.VISIBLE
+        localModelStatus.visibility = if (local) View.VISIBLE else View.GONE
+        if (local) {
+            val ready = session.isLocalModelReady()
+            localModelStatus.setText(
+                if (ready) R.string.adk_local_model_ready else R.string.adk_local_model_missing
+            )
+            localModelStatus.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    if (ready) R.color.adk_primary else R.color.adk_warning
+                )
+            )
+        }
     }
 
     private fun hasCalendarPermissions(): Boolean =
@@ -335,6 +378,7 @@ class AdkPlaygroundActivity : AppCompatActivity() {
         newSessionButton.isEnabled = !running
         apiKeyEditor.isEnabled = !running && !hasPending
         modelEditor.isEnabled = !running && !hasPending
+        localModelCheck.isEnabled = !running && !hasPending
         promptEditor.isEnabled = !running && !hasPending
         streamingCheck.isEnabled = !running && !hasPending
     }
@@ -354,6 +398,11 @@ class AdkPlaygroundActivity : AppCompatActivity() {
         configToggle = findViewById(R.id.configToggle)
         apiKeyEditor = findViewById(R.id.apiKeyEditor)
         modelEditor = findViewById(R.id.modelEditor)
+        localModelCheck = findViewById(R.id.localModelCheck)
+        apiKeyLayout = findViewById(R.id.apiKeyLayout)
+        apiKeyWarning = findViewById(R.id.apiKeyWarning)
+        modelLayout = findViewById(R.id.modelLayout)
+        localModelStatus = findViewById(R.id.localModelStatus)
         promptEditor = findViewById(R.id.promptEditor)
         streamingCheck = findViewById(R.id.streamingCheck)
         sendButton = findViewById(R.id.sendButton)
@@ -368,12 +417,13 @@ class AdkPlaygroundActivity : AppCompatActivity() {
         pendingContainer = findViewById(R.id.pendingContainer)
     }
 
-    private data class AgentConfig(val apiKey: String, val model: String)
+    private data class AgentConfig(val modelConfig: AdkModelConfig)
 
     private companion object {
         const val DEFAULT_MODEL = "gemini-3.1-flash-lite-preview"
         const val DEFAULT_PROMPT = "用 JavaScript 计算订单 [12.5, 8, 21.5, 5] 的总额、平均值和最大值。"
         const val STATE_MODEL = "model"
+        const val STATE_LOCAL_MODEL = "local_model"
         const val STATE_PROMPT = "prompt"
         const val STATE_STREAMING = "streaming"
     }
